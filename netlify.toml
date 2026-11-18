@@ -1,0 +1,7 @@
+# Netlify builds the site from source on every push to main.
+[build]
+  command = "node build.js"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

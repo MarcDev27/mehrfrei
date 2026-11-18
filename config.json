@@ -1,0 +1,31 @@
+{
+  "baseUrl": "https://www.example.com",
+  "siteName": "Mehrfrei",
+  "year": 2027,
+  "plannerDefaultLeave": 10,
+  "countries": [
+    "at",
+    "de",
+    "ch"
+  ],
+  "defaultRegion": {
+    "at": "W",
+    "de": "NW",
+    "ch": "ZH"
+  },
+  "adsenseClient": "",
+  "showAdPlaceholders": true,
+  "product": {
+    "url": "",
+    "price": {
+      "de": "7 €",
+      "en": "€7"
+    }
+  },
+  "owner": {
+    "name": "[Vor- und Nachname]",
+    "address": "[Straße Hausnummer, PLZ Ort, Österreich]",
+    "email": "[kontakt@deine-domain.at]",
+    "purpose": "[Informationsangebot zu Feiertagen, Fenstertagen und Urlaubsplanung]"
+  }
+}

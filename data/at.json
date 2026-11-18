@@ -1,0 +1,48 @@
+{
+  "code": "at",
+  "name": { "de": "Österreich", "en": "Austria" },
+  "inName": { "de": "in Österreich", "en": "in Austria" },
+  "term": { "de": "Fenstertage", "en": "bridge days" },
+  "termSingular": { "de": "Fenstertag", "en": "bridge day" },
+  "path": { "de": "fenstertage-{year}", "en": "en/bridge-days-{year}/austria" },
+  "regionWord": { "de": "Bundesland", "en": "state" },
+  "defaultLeave": 25,
+  "schoolSource": {
+    "de": "BMBWF / oesterreich.gv.at, Schuljahr 2026/27. Herbst- und Weihnachtsferien 2027 laut Schulzeitgesetz.",
+    "en": "Austrian Ministry of Education (BMBWF) / oesterreich.gv.at, school year 2026/27. Autumn and Christmas break 2027 as fixed by the School Time Act."
+  },
+  "regions": [
+    { "code": "B", "slug": { "de": "burgenland", "en": "burgenland" }, "name": { "de": "Burgenland", "en": "Burgenland" }, "in": { "de": "im Burgenland", "en": "in Burgenland" } },
+    { "code": "K", "slug": { "de": "kaernten", "en": "carinthia" }, "name": { "de": "Kärnten", "en": "Carinthia" }, "in": { "de": "in Kärnten", "en": "in Carinthia" } },
+    { "code": "N", "slug": { "de": "niederoesterreich", "en": "lower-austria" }, "name": { "de": "Niederösterreich", "en": "Lower Austria" }, "in": { "de": "in Niederösterreich", "en": "in Lower Austria" } },
+    { "code": "O", "slug": { "de": "oberoesterreich", "en": "upper-austria" }, "name": { "de": "Oberösterreich", "en": "Upper Austria" }, "in": { "de": "in Oberösterreich", "en": "in Upper Austria" } },
+    { "code": "S", "slug": { "de": "salzburg", "en": "salzburg" }, "name": { "de": "Salzburg", "en": "Salzburg" }, "in": { "de": "in Salzburg", "en": "in Salzburg" } },
+    { "code": "ST", "slug": { "de": "steiermark", "en": "styria" }, "name": { "de": "Steiermark", "en": "Styria" }, "in": { "de": "in der Steiermark", "en": "in Styria" } },
+    { "code": "T", "slug": { "de": "tirol", "en": "tyrol" }, "name": { "de": "Tirol", "en": "Tyrol" }, "in": { "de": "in Tirol", "en": "in Tyrol" } },
+    { "code": "V", "slug": { "de": "vorarlberg", "en": "vorarlberg" }, "name": { "de": "Vorarlberg", "en": "Vorarlberg" }, "in": { "de": "in Vorarlberg", "en": "in Vorarlberg" } },
+    { "code": "W", "slug": { "de": "wien", "en": "vienna" }, "name": { "de": "Wien", "en": "Vienna" }, "in": { "de": "in Wien", "en": "in Vienna" } }
+  ],
+  "holidays": [
+    { "id": "newyear", "date": "01-01", "name": { "de": "Neujahr", "en": "New Year's Day" } },
+    { "id": "epiphany", "date": "01-06", "name": { "de": "Heilige Drei Könige", "en": "Epiphany" } },
+    { "id": "eastermon", "easter": 1, "name": { "de": "Ostermontag", "en": "Easter Monday" } },
+    { "id": "labour", "date": "05-01", "name": { "de": "Staatsfeiertag", "en": "Labour Day" } },
+    { "id": "ascension", "easter": 39, "name": { "de": "Christi Himmelfahrt", "en": "Ascension Day" } },
+    { "id": "whitmon", "easter": 50, "name": { "de": "Pfingstmontag", "en": "Whit Monday" } },
+    { "id": "corpus", "easter": 60, "name": { "de": "Fronleichnam", "en": "Corpus Christi" } },
+    { "id": "assumption", "date": "08-15", "name": { "de": "Mariä Himmelfahrt", "en": "Assumption Day" } },
+    { "id": "national", "date": "10-26", "name": { "de": "Nationalfeiertag", "en": "National Day" } },
+    { "id": "allsaints", "date": "11-01", "name": { "de": "Allerheiligen", "en": "All Saints' Day" } },
+    { "id": "immaculate", "date": "12-08", "name": { "de": "Mariä Empfängnis", "en": "Immaculate Conception" } },
+    { "id": "xmas", "date": "12-25", "name": { "de": "Christtag", "en": "Christmas Day" } },
+    { "id": "stephen", "date": "12-26", "name": { "de": "Stefanitag", "en": "St Stephen's Day" } },
+
+    { "id": "joseph", "date": "03-19", "type": "optional", "regions": ["K", "ST", "T", "V"], "name": { "de": "Josefitag (Landespatron)", "en": "St Joseph's Day (patron saint)" }, "note": { "de": "Schulfrei, aber kein gesetzlicher Feiertag. Im öffentlichen Dienst oft frei.", "en": "No school, but not a statutory holiday. Often a day off in the public sector." } },
+    { "id": "florian", "date": "05-04", "type": "optional", "regions": ["O"], "name": { "de": "Florianitag (Landespatron)", "en": "St Florian's Day (patron saint)" }, "note": { "de": "Schulfrei, aber kein gesetzlicher Feiertag. Im öffentlichen Dienst oft frei.", "en": "No school, but not a statutory holiday. Often a day off in the public sector." } },
+    { "id": "rupert", "date": "09-24", "type": "optional", "regions": ["S"], "name": { "de": "Rupertitag (Landespatron)", "en": "St Rupert's Day (patron saint)" }, "note": { "de": "Schulfrei, aber kein gesetzlicher Feiertag. Im öffentlichen Dienst oft frei.", "en": "No school, but not a statutory holiday. Often a day off in the public sector." } },
+    { "id": "martin", "date": "11-11", "type": "optional", "regions": ["B"], "name": { "de": "Martinitag (Landespatron)", "en": "St Martin's Day (patron saint)" }, "note": { "de": "Schulfrei, aber kein gesetzlicher Feiertag. Im öffentlichen Dienst oft frei.", "en": "No school, but not a statutory holiday. Often a day off in the public sector." } },
+    { "id": "leopold", "date": "11-15", "type": "optional", "regions": ["N", "W"], "name": { "de": "Leopolditag (Landespatron)", "en": "St Leopold's Day (patron saint)" }, "note": { "de": "Schulfrei, aber kein gesetzlicher Feiertag. Im öffentlichen Dienst oft frei.", "en": "No school, but not a statutory holiday. Often a day off in the public sector." } },
+    { "id": "xmaseve", "date": "12-24", "type": "optional", "name": { "de": "Heiliger Abend", "en": "Christmas Eve" }, "note": { "de": "Kein gesetzlicher Feiertag, laut vielen Kollektivverträgen aber (halb) frei.", "en": "Not a statutory holiday, but (half) off under many collective agreements." } },
+    { "id": "nye", "date": "12-31", "type": "optional", "name": { "de": "Silvester", "en": "New Year's Eve" }, "note": { "de": "Kein gesetzlicher Feiertag, laut vielen Kollektivverträgen aber (halb) frei.", "en": "Not a statutory holiday, but (half) off under many collective agreements." } }
+  ]
+}
