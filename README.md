@@ -1,6 +1,6 @@
 # Mehrfrei – Fenstertage & Brückentage 2027
 
-A static website with 112 pages (German and English): a homepage, Austria, Germany and Switzerland with all 9 Austrian states, 16 German states and 26 Swiss cantons, and a product page. Switzerland currently has public holidays only; Swiss school holidays are often set by municipalities and are not included yet. Every page includes an interactive leave planner. No server, no database, no cookies.
+A static website with 170 indexable pages: Austria and Germany in German and English; Switzerland in German, English, French and Italian. It covers all 9 Austrian states, 16 German states and 26 Swiss cantons, plus homepages and a product page per language. Switzerland currently has public holidays only; Swiss school holidays are often set by municipalities and are not included yet. Every page includes an interactive leave planner. No server, no database, no cookies.
 
 ## Going live (about 30 minutes)
 
@@ -37,3 +37,7 @@ Create `data/<cc>.json` in the same format as `at.json`: regions, holiday rules 
 ## Netlify free plan
 
 New Netlify accounts get 300 credits a month on the free plan. A production deploy costs 15 credits and bandwidth costs 20 credits per GB. When the credits run out, the site pauses until the next month. So batch changes into a few pushes. Once traffic grows, upgrade to Personal ($9 a month) before you reach the limit.
+
+## Languages
+
+`config.json` → `languages` sets which languages each country is published in. German and English text lives in `build.js`, in the region, country and home page functions. French and Italian page text lives in the `RO` object in `build.js`. Planner text for all languages is in `engine/strings.js`, and date formats are in `engine/core.js`. Holiday names and notes come from the data files, with one entry per language.

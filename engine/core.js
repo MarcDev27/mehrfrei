@@ -210,41 +210,52 @@
   var MONTHS = {
     'de-AT': ['Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
     'de-DE': ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-    'en': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    'en': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    'fr': ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
+    'it': ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre']
   };
   var MONTHS_SHORT = {
     'de-AT': ['Jän.', 'Feb.', 'März', 'Apr.', 'Mai', 'Juni', 'Juli', 'Aug.', 'Sep.', 'Okt.', 'Nov.', 'Dez.'],
     'de-DE': ['Jan.', 'Feb.', 'März', 'Apr.', 'Mai', 'Juni', 'Juli', 'Aug.', 'Sep.', 'Okt.', 'Nov.', 'Dez.'],
-    'en': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    'en': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    'fr': ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'],
+    'it': ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic']
   };
   var WEEKDAYS = {
     de: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-    en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    fr: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
+    it: ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato']
   };
-  var WD_SHORT = { de: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'], en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] };
+  var WD_SHORT = { de: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'], en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    fr: ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'], it: ['dom', 'lun', 'mar', 'mer', 'gio', 'ven', 'sab'] };
 
-  function loc(lang, cc) { return lang === 'en' ? 'en' : (cc === 'at' ? 'de-AT' : 'de-DE'); } // de-CH uses the same month names as de-DE
+  function loc(lang, cc) { return (lang === 'en' || lang === 'fr' || lang === 'it') ? lang : (cc === 'at' ? 'de-AT' : 'de-DE'); } // de-CH uses the same month names as de-DE
   function parts(s) { var t = parseISO(s), d = new Date(t); return { y: d.getUTCFullYear(), m: d.getUTCMonth(), d: d.getUTCDate(), w: d.getUTCDay() }; }
 
+  function wdKey(lang) { return WD_SHORT[lang] ? lang : 'de'; }
+  // French and Italian write the first of the month as 1er / 1º
+  function dayNum(d, lang) { return d === 1 && lang === 'fr' ? '1er' : d === 1 && lang === 'it' ? '1º' : String(d); }
   function fmtDate(s, lang, cc, withYear, withWeekday) {
     var p = parts(s), L = loc(lang, cc), out;
-    if (lang === 'en') out = p.d + ' ' + MONTHS[L][p.m] + (withYear ? ' ' + p.y : '');
-    else out = p.d + '. ' + MONTHS[L][p.m] + (withYear ? ' ' + p.y : '');
-    if (withWeekday) out = WD_SHORT[lang === 'en' ? 'en' : 'de'][p.w] + (lang === 'en' ? ' ' : ', ') + out;
+    if (lang === 'de') out = p.d + '. ' + MONTHS[L][p.m] + (withYear ? ' ' + p.y : '');
+    else out = dayNum(p.d, lang) + ' ' + MONTHS[L][p.m] + (withYear ? ' ' + p.y : '');
+    if (withWeekday) out = WD_SHORT[wdKey(lang)][p.w] + (lang === 'de' ? ', ' : ' ') + out;
     return out;
   }
   function fmtRange(a, b, lang, cc, withYear) {
     var A = parts(a), B = parts(b), L = loc(lang, cc), M = MONTHS_SHORT[L];
     var yA = withYear && A.y !== B.y ? ' ' + A.y : '', yB = withYear ? ' ' + B.y : '';
     if (a === b) return fmtDate(a, lang, cc, withYear);
-    if (lang === 'en') {
-      if (A.m === B.m && A.y === B.y) return A.d + '–' + B.d + ' ' + M[B.m] + yB;
-      return A.d + ' ' + M[A.m] + yA + ' – ' + B.d + ' ' + M[B.m] + yB;
+    if (lang !== 'de') {
+      var a1 = dayNum(A.d, lang), b1 = dayNum(B.d, lang);
+      if (A.m === B.m && A.y === B.y) return a1 + '–' + b1 + ' ' + M[B.m] + yB;
+      return a1 + ' ' + M[A.m] + yA + ' – ' + b1 + ' ' + M[B.m] + yB;
     }
     if (A.m === B.m && A.y === B.y) return A.d + '.–' + B.d + '. ' + M[B.m] + yB;
     return A.d + '. ' + M[A.m] + yA + ' – ' + B.d + '. ' + M[B.m] + yB;
   }
-  function weekday(s, lang) { return WEEKDAYS[lang === 'en' ? 'en' : 'de'][parts(s).w]; }
+  function weekday(s, lang) { return WEEKDAYS[WEEKDAYS[lang] ? lang : 'de'][parts(s).w]; }
 
   /** iCalendar export of a plan (all-day events). */
   function toICS(breaks, title) {

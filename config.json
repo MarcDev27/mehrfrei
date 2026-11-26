@@ -19,7 +19,9 @@
     "url": "",
     "price": {
       "de": "7 €",
-      "en": "€7"
+      "en": "€7",
+      "fr": "7 €",
+      "it": "7 €"
     }
   },
   "owner": {
@@ -27,5 +29,25 @@
     "address": "[Straße Hausnummer, PLZ Ort, Österreich]",
     "email": "[kontakt@deine-domain.at]",
     "purpose": "[Informationsangebot zu Feiertagen, Fenstertagen und Urlaubsplanung]"
+  },
+  "languages": {
+    "at": [
+      "de",
+      "en"
+    ],
+    "de": [
+      "de",
+      "en"
+    ],
+    "ch": [
+      "de",
+      "en",
+      "fr",
+      "it"
+    ]
+  },
+  "defaultRegionByLang": {
+    "fr": "GE",
+    "it": "TI"
   }
 }

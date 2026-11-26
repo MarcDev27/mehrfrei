@@ -1,90 +1,1480 @@
 {
   "code": "ch",
-  "name": { "de": "Schweiz", "en": "Switzerland" },
-  "nameNom": { "de": "Die Schweiz", "en": "Switzerland" },
-  "whole": { "de": "die ganze Schweiz", "en": "all of Switzerland" },
-  "inName": { "de": "in der Schweiz", "en": "in Switzerland" },
-  "term": { "de": "Brückentage", "en": "bridge days" },
-  "termSingular": { "de": "Brückentag", "en": "bridge day" },
-  "path": { "de": "brueckentage-schweiz-{year}", "en": "en/bridge-days-{year}/switzerland" },
-  "regionWord": { "de": "Kanton", "en": "canton" },
+  "name": {
+    "de": "Schweiz",
+    "en": "Switzerland",
+    "fr": "Suisse",
+    "it": "Svizzera"
+  },
+  "nameNom": {
+    "de": "Die Schweiz",
+    "en": "Switzerland",
+    "fr": "La Suisse",
+    "it": "La Svizzera"
+  },
+  "whole": {
+    "de": "die ganze Schweiz",
+    "en": "all of Switzerland",
+    "fr": "toute la Suisse",
+    "it": "tutta la Svizzera"
+  },
+  "inName": {
+    "de": "in der Schweiz",
+    "en": "in Switzerland",
+    "fr": "en Suisse",
+    "it": "in Svizzera"
+  },
+  "term": {
+    "de": "Brückentage",
+    "en": "bridge days",
+    "fr": "ponts",
+    "it": "ponti"
+  },
+  "termSingular": {
+    "de": "Brückentag",
+    "en": "bridge day",
+    "fr": "pont",
+    "it": "ponte"
+  },
+  "path": {
+    "de": "brueckentage-schweiz-{year}",
+    "en": "en/bridge-days-{year}/switzerland",
+    "fr": "fr/jours-feries-{year}",
+    "it": "it/giorni-festivi-{year}"
+  },
+  "regionWord": {
+    "de": "Kanton",
+    "en": "canton",
+    "fr": "canton",
+    "it": "cantone"
+  },
   "defaultLeave": 25,
   "holidaySource": {
     "de": "Bundesamt für Justiz (Verzeichnis der kantonalen Feiertage) und SECO (Anhang Feiertage Schweiz, Stand 12.12.2024). Gesetzliche Feiertage und Tage, die wie gesetzliche Feiertage behandelt werden.",
-    "en": "Swiss Federal Office of Justice (list of cantonal holidays) and SECO (holiday annex, as of 12 Dec 2024). Statutory holidays and days treated like statutory holidays."
+    "en": "Swiss Federal Office of Justice (list of cantonal holidays) and SECO (holiday annex, as of 12 Dec 2024). Statutory holidays and days treated like statutory holidays.",
+    "fr": "Office fédéral de la justice (liste des jours fériés cantonaux) et SECO (annexe sur les jours fériés, état au 12.12.2024). Jours fériés légaux et jours assimilés.",
+    "it": "Ufficio federale di giustizia (elenco dei giorni festivi cantonali) e SECO (allegato sui giorni festivi, stato 12.12.2024). Giorni festivi legali e giorni equiparati."
   },
   "regions": [
-    { "code": "AG", "slug": { "de": "aargau", "en": "aargau" }, "name": { "de": "Aargau", "en": "Aargau" }, "in": { "de": "im Kanton Aargau", "en": "in the canton of Aargau" } },
-    { "code": "AR", "slug": { "de": "appenzell-ausserrhoden", "en": "appenzell-ausserrhoden" }, "name": { "de": "Appenzell Ausserrhoden", "en": "Appenzell Ausserrhoden" }, "in": { "de": "im Kanton Appenzell Ausserrhoden", "en": "in the canton of Appenzell Ausserrhoden" } },
-    { "code": "AI", "slug": { "de": "appenzell-innerrhoden", "en": "appenzell-innerrhoden" }, "name": { "de": "Appenzell Innerrhoden", "en": "Appenzell Innerrhoden" }, "in": { "de": "im Kanton Appenzell Innerrhoden", "en": "in the canton of Appenzell Innerrhoden" } },
-    { "code": "BL", "slug": { "de": "basel-landschaft", "en": "basel-landschaft" }, "name": { "de": "Basel-Landschaft", "en": "Basel-Landschaft" }, "in": { "de": "im Kanton Basel-Landschaft", "en": "in the canton of Basel-Landschaft" } },
-    { "code": "BS", "slug": { "de": "basel-stadt", "en": "basel-stadt" }, "name": { "de": "Basel-Stadt", "en": "Basel-Stadt" }, "in": { "de": "im Kanton Basel-Stadt", "en": "in the canton of Basel-Stadt" } },
-    { "code": "BE", "slug": { "de": "bern", "en": "bern" }, "name": { "de": "Bern", "en": "Bern" }, "in": { "de": "im Kanton Bern", "en": "in the canton of Bern" } },
-    { "code": "FR", "slug": { "de": "freiburg", "en": "fribourg" }, "name": { "de": "Freiburg", "en": "Fribourg" }, "in": { "de": "im Kanton Freiburg", "en": "in the canton of Fribourg" } },
-    { "code": "GE", "slug": { "de": "genf", "en": "geneva" }, "name": { "de": "Genf", "en": "Geneva" }, "in": { "de": "im Kanton Genf", "en": "in the canton of Geneva" } },
-    { "code": "GL", "slug": { "de": "glarus", "en": "glarus" }, "name": { "de": "Glarus", "en": "Glarus" }, "in": { "de": "im Kanton Glarus", "en": "in the canton of Glarus" } },
-    { "code": "GR", "slug": { "de": "graubuenden", "en": "graubuenden" }, "name": { "de": "Graubünden", "en": "Graubünden" }, "in": { "de": "im Kanton Graubünden", "en": "in the canton of Graubünden" } },
-    { "code": "JU", "slug": { "de": "jura", "en": "jura" }, "name": { "de": "Jura", "en": "Jura" }, "in": { "de": "im Kanton Jura", "en": "in the canton of Jura" } },
-    { "code": "LU", "slug": { "de": "luzern", "en": "lucerne" }, "name": { "de": "Luzern", "en": "Lucerne" }, "in": { "de": "im Kanton Luzern", "en": "in the canton of Lucerne" } },
-    { "code": "NE", "slug": { "de": "neuenburg", "en": "neuchatel" }, "name": { "de": "Neuenburg", "en": "Neuchâtel" }, "in": { "de": "im Kanton Neuenburg", "en": "in the canton of Neuchâtel" } },
-    { "code": "NW", "slug": { "de": "nidwalden", "en": "nidwalden" }, "name": { "de": "Nidwalden", "en": "Nidwalden" }, "in": { "de": "im Kanton Nidwalden", "en": "in the canton of Nidwalden" } },
-    { "code": "OW", "slug": { "de": "obwalden", "en": "obwalden" }, "name": { "de": "Obwalden", "en": "Obwalden" }, "in": { "de": "im Kanton Obwalden", "en": "in the canton of Obwalden" } },
-    { "code": "SH", "slug": { "de": "schaffhausen", "en": "schaffhausen" }, "name": { "de": "Schaffhausen", "en": "Schaffhausen" }, "in": { "de": "im Kanton Schaffhausen", "en": "in the canton of Schaffhausen" } },
-    { "code": "SZ", "slug": { "de": "schwyz", "en": "schwyz" }, "name": { "de": "Schwyz", "en": "Schwyz" }, "in": { "de": "im Kanton Schwyz", "en": "in the canton of Schwyz" } },
-    { "code": "SO", "slug": { "de": "solothurn", "en": "solothurn" }, "name": { "de": "Solothurn", "en": "Solothurn" }, "in": { "de": "im Kanton Solothurn", "en": "in the canton of Solothurn" } },
-    { "code": "SG", "slug": { "de": "st-gallen", "en": "st-gallen" }, "name": { "de": "St. Gallen", "en": "St. Gallen" }, "in": { "de": "im Kanton St. Gallen", "en": "in the canton of St. Gallen" } },
-    { "code": "TI", "slug": { "de": "tessin", "en": "ticino" }, "name": { "de": "Tessin", "en": "Ticino" }, "in": { "de": "im Kanton Tessin", "en": "in the canton of Ticino" } },
-    { "code": "TG", "slug": { "de": "thurgau", "en": "thurgau" }, "name": { "de": "Thurgau", "en": "Thurgau" }, "in": { "de": "im Kanton Thurgau", "en": "in the canton of Thurgau" } },
-    { "code": "UR", "slug": { "de": "uri", "en": "uri" }, "name": { "de": "Uri", "en": "Uri" }, "in": { "de": "im Kanton Uri", "en": "in the canton of Uri" } },
-    { "code": "VD", "slug": { "de": "waadt", "en": "vaud" }, "name": { "de": "Waadt", "en": "Vaud" }, "in": { "de": "im Kanton Waadt", "en": "in the canton of Vaud" } },
-    { "code": "VS", "slug": { "de": "wallis", "en": "valais" }, "name": { "de": "Wallis", "en": "Valais" }, "in": { "de": "im Kanton Wallis", "en": "in the canton of Valais" } },
-    { "code": "ZG", "slug": { "de": "zug", "en": "zug" }, "name": { "de": "Zug", "en": "Zug" }, "in": { "de": "im Kanton Zug", "en": "in the canton of Zug" } },
-    { "code": "ZH", "slug": { "de": "zuerich", "en": "zurich" }, "name": { "de": "Zürich", "en": "Zurich" }, "in": { "de": "im Kanton Zürich", "en": "in the canton of Zurich" } }
+    {
+      "code": "AG",
+      "slug": {
+        "de": "aargau",
+        "en": "aargau",
+        "fr": "argovie",
+        "it": "argovia"
+      },
+      "name": {
+        "de": "Aargau",
+        "en": "Aargau",
+        "fr": "Argovie",
+        "it": "Argovia"
+      },
+      "in": {
+        "de": "im Kanton Aargau",
+        "en": "in the canton of Aargau",
+        "fr": "dans le canton d'Argovie",
+        "it": "nel Cantone di Argovia"
+      }
+    },
+    {
+      "code": "AR",
+      "slug": {
+        "de": "appenzell-ausserrhoden",
+        "en": "appenzell-ausserrhoden",
+        "fr": "appenzell-rhodes-exterieures",
+        "it": "appenzello-esterno"
+      },
+      "name": {
+        "de": "Appenzell Ausserrhoden",
+        "en": "Appenzell Ausserrhoden",
+        "fr": "Appenzell Rhodes-Extérieures",
+        "it": "Appenzello Esterno"
+      },
+      "in": {
+        "de": "im Kanton Appenzell Ausserrhoden",
+        "en": "in the canton of Appenzell Ausserrhoden",
+        "fr": "dans le canton d'Appenzell Rhodes-Extérieures",
+        "it": "nel Cantone di Appenzello Esterno"
+      }
+    },
+    {
+      "code": "AI",
+      "slug": {
+        "de": "appenzell-innerrhoden",
+        "en": "appenzell-innerrhoden",
+        "fr": "appenzell-rhodes-interieures",
+        "it": "appenzello-interno"
+      },
+      "name": {
+        "de": "Appenzell Innerrhoden",
+        "en": "Appenzell Innerrhoden",
+        "fr": "Appenzell Rhodes-Intérieures",
+        "it": "Appenzello Interno"
+      },
+      "in": {
+        "de": "im Kanton Appenzell Innerrhoden",
+        "en": "in the canton of Appenzell Innerrhoden",
+        "fr": "dans le canton d'Appenzell Rhodes-Intérieures",
+        "it": "nel Cantone di Appenzello Interno"
+      }
+    },
+    {
+      "code": "BL",
+      "slug": {
+        "de": "basel-landschaft",
+        "en": "basel-landschaft",
+        "fr": "bale-campagne",
+        "it": "basilea-campagna"
+      },
+      "name": {
+        "de": "Basel-Landschaft",
+        "en": "Basel-Landschaft",
+        "fr": "Bâle-Campagne",
+        "it": "Basilea Campagna"
+      },
+      "in": {
+        "de": "im Kanton Basel-Landschaft",
+        "en": "in the canton of Basel-Landschaft",
+        "fr": "dans le canton de Bâle-Campagne",
+        "it": "nel Cantone di Basilea Campagna"
+      }
+    },
+    {
+      "code": "BS",
+      "slug": {
+        "de": "basel-stadt",
+        "en": "basel-stadt",
+        "fr": "bale-ville",
+        "it": "basilea-citta"
+      },
+      "name": {
+        "de": "Basel-Stadt",
+        "en": "Basel-Stadt",
+        "fr": "Bâle-Ville",
+        "it": "Basilea Città"
+      },
+      "in": {
+        "de": "im Kanton Basel-Stadt",
+        "en": "in the canton of Basel-Stadt",
+        "fr": "dans le canton de Bâle-Ville",
+        "it": "nel Cantone di Basilea Città"
+      }
+    },
+    {
+      "code": "BE",
+      "slug": {
+        "de": "bern",
+        "en": "bern",
+        "fr": "berne",
+        "it": "berna"
+      },
+      "name": {
+        "de": "Bern",
+        "en": "Bern",
+        "fr": "Berne",
+        "it": "Berna"
+      },
+      "in": {
+        "de": "im Kanton Bern",
+        "en": "in the canton of Bern",
+        "fr": "dans le canton de Berne",
+        "it": "nel Cantone di Berna"
+      }
+    },
+    {
+      "code": "FR",
+      "slug": {
+        "de": "freiburg",
+        "en": "fribourg",
+        "fr": "fribourg",
+        "it": "friburgo"
+      },
+      "name": {
+        "de": "Freiburg",
+        "en": "Fribourg",
+        "fr": "Fribourg",
+        "it": "Friburgo"
+      },
+      "in": {
+        "de": "im Kanton Freiburg",
+        "en": "in the canton of Fribourg",
+        "fr": "dans le canton de Fribourg",
+        "it": "nel Cantone di Friburgo"
+      }
+    },
+    {
+      "code": "GE",
+      "slug": {
+        "de": "genf",
+        "en": "geneva",
+        "fr": "geneve",
+        "it": "ginevra"
+      },
+      "name": {
+        "de": "Genf",
+        "en": "Geneva",
+        "fr": "Genève",
+        "it": "Ginevra"
+      },
+      "in": {
+        "de": "im Kanton Genf",
+        "en": "in the canton of Geneva",
+        "fr": "dans le canton de Genève",
+        "it": "nel Cantone di Ginevra"
+      }
+    },
+    {
+      "code": "GL",
+      "slug": {
+        "de": "glarus",
+        "en": "glarus",
+        "fr": "glaris",
+        "it": "glarona"
+      },
+      "name": {
+        "de": "Glarus",
+        "en": "Glarus",
+        "fr": "Glaris",
+        "it": "Glarona"
+      },
+      "in": {
+        "de": "im Kanton Glarus",
+        "en": "in the canton of Glarus",
+        "fr": "dans le canton de Glaris",
+        "it": "nel Cantone di Glarona"
+      }
+    },
+    {
+      "code": "GR",
+      "slug": {
+        "de": "graubuenden",
+        "en": "graubuenden",
+        "fr": "grisons",
+        "it": "grigioni"
+      },
+      "name": {
+        "de": "Graubünden",
+        "en": "Graubünden",
+        "fr": "Grisons",
+        "it": "Grigioni"
+      },
+      "in": {
+        "de": "im Kanton Graubünden",
+        "en": "in the canton of Graubünden",
+        "fr": "dans le canton des Grisons",
+        "it": "nel Cantone dei Grigioni"
+      }
+    },
+    {
+      "code": "JU",
+      "slug": {
+        "de": "jura",
+        "en": "jura",
+        "fr": "jura",
+        "it": "giura"
+      },
+      "name": {
+        "de": "Jura",
+        "en": "Jura",
+        "fr": "Jura",
+        "it": "Giura"
+      },
+      "in": {
+        "de": "im Kanton Jura",
+        "en": "in the canton of Jura",
+        "fr": "dans le canton du Jura",
+        "it": "nel Cantone del Giura"
+      }
+    },
+    {
+      "code": "LU",
+      "slug": {
+        "de": "luzern",
+        "en": "lucerne",
+        "fr": "lucerne",
+        "it": "lucerna"
+      },
+      "name": {
+        "de": "Luzern",
+        "en": "Lucerne",
+        "fr": "Lucerne",
+        "it": "Lucerna"
+      },
+      "in": {
+        "de": "im Kanton Luzern",
+        "en": "in the canton of Lucerne",
+        "fr": "dans le canton de Lucerne",
+        "it": "nel Cantone di Lucerna"
+      }
+    },
+    {
+      "code": "NE",
+      "slug": {
+        "de": "neuenburg",
+        "en": "neuchatel",
+        "fr": "neuchatel",
+        "it": "neuchatel"
+      },
+      "name": {
+        "de": "Neuenburg",
+        "en": "Neuchâtel",
+        "fr": "Neuchâtel",
+        "it": "Neuchâtel"
+      },
+      "in": {
+        "de": "im Kanton Neuenburg",
+        "en": "in the canton of Neuchâtel",
+        "fr": "dans le canton de Neuchâtel",
+        "it": "nel Cantone di Neuchâtel"
+      }
+    },
+    {
+      "code": "NW",
+      "slug": {
+        "de": "nidwalden",
+        "en": "nidwalden",
+        "fr": "nidwald",
+        "it": "nidvaldo"
+      },
+      "name": {
+        "de": "Nidwalden",
+        "en": "Nidwalden",
+        "fr": "Nidwald",
+        "it": "Nidvaldo"
+      },
+      "in": {
+        "de": "im Kanton Nidwalden",
+        "en": "in the canton of Nidwalden",
+        "fr": "dans le canton de Nidwald",
+        "it": "nel Cantone di Nidvaldo"
+      }
+    },
+    {
+      "code": "OW",
+      "slug": {
+        "de": "obwalden",
+        "en": "obwalden",
+        "fr": "obwald",
+        "it": "obvaldo"
+      },
+      "name": {
+        "de": "Obwalden",
+        "en": "Obwalden",
+        "fr": "Obwald",
+        "it": "Obvaldo"
+      },
+      "in": {
+        "de": "im Kanton Obwalden",
+        "en": "in the canton of Obwalden",
+        "fr": "dans le canton d'Obwald",
+        "it": "nel Cantone di Obvaldo"
+      }
+    },
+    {
+      "code": "SH",
+      "slug": {
+        "de": "schaffhausen",
+        "en": "schaffhausen",
+        "fr": "schaffhouse",
+        "it": "sciaffusa"
+      },
+      "name": {
+        "de": "Schaffhausen",
+        "en": "Schaffhausen",
+        "fr": "Schaffhouse",
+        "it": "Sciaffusa"
+      },
+      "in": {
+        "de": "im Kanton Schaffhausen",
+        "en": "in the canton of Schaffhausen",
+        "fr": "dans le canton de Schaffhouse",
+        "it": "nel Cantone di Sciaffusa"
+      }
+    },
+    {
+      "code": "SZ",
+      "slug": {
+        "de": "schwyz",
+        "en": "schwyz",
+        "fr": "schwytz",
+        "it": "svitto"
+      },
+      "name": {
+        "de": "Schwyz",
+        "en": "Schwyz",
+        "fr": "Schwytz",
+        "it": "Svitto"
+      },
+      "in": {
+        "de": "im Kanton Schwyz",
+        "en": "in the canton of Schwyz",
+        "fr": "dans le canton de Schwytz",
+        "it": "nel Cantone di Svitto"
+      }
+    },
+    {
+      "code": "SO",
+      "slug": {
+        "de": "solothurn",
+        "en": "solothurn",
+        "fr": "soleure",
+        "it": "soletta"
+      },
+      "name": {
+        "de": "Solothurn",
+        "en": "Solothurn",
+        "fr": "Soleure",
+        "it": "Soletta"
+      },
+      "in": {
+        "de": "im Kanton Solothurn",
+        "en": "in the canton of Solothurn",
+        "fr": "dans le canton de Soleure",
+        "it": "nel Cantone di Soletta"
+      }
+    },
+    {
+      "code": "SG",
+      "slug": {
+        "de": "st-gallen",
+        "en": "st-gallen",
+        "fr": "saint-gall",
+        "it": "san-gallo"
+      },
+      "name": {
+        "de": "St. Gallen",
+        "en": "St. Gallen",
+        "fr": "Saint-Gall",
+        "it": "San Gallo"
+      },
+      "in": {
+        "de": "im Kanton St. Gallen",
+        "en": "in the canton of St. Gallen",
+        "fr": "dans le canton de Saint-Gall",
+        "it": "nel Cantone di San Gallo"
+      }
+    },
+    {
+      "code": "TI",
+      "slug": {
+        "de": "tessin",
+        "en": "ticino",
+        "fr": "tessin",
+        "it": "ticino"
+      },
+      "name": {
+        "de": "Tessin",
+        "en": "Ticino",
+        "fr": "Tessin",
+        "it": "Ticino"
+      },
+      "in": {
+        "de": "im Kanton Tessin",
+        "en": "in the canton of Ticino",
+        "fr": "dans le canton du Tessin",
+        "it": "nel Cantone Ticino"
+      }
+    },
+    {
+      "code": "TG",
+      "slug": {
+        "de": "thurgau",
+        "en": "thurgau",
+        "fr": "thurgovie",
+        "it": "turgovia"
+      },
+      "name": {
+        "de": "Thurgau",
+        "en": "Thurgau",
+        "fr": "Thurgovie",
+        "it": "Turgovia"
+      },
+      "in": {
+        "de": "im Kanton Thurgau",
+        "en": "in the canton of Thurgau",
+        "fr": "dans le canton de Thurgovie",
+        "it": "nel Cantone di Turgovia"
+      }
+    },
+    {
+      "code": "UR",
+      "slug": {
+        "de": "uri",
+        "en": "uri",
+        "fr": "uri",
+        "it": "uri"
+      },
+      "name": {
+        "de": "Uri",
+        "en": "Uri",
+        "fr": "Uri",
+        "it": "Uri"
+      },
+      "in": {
+        "de": "im Kanton Uri",
+        "en": "in the canton of Uri",
+        "fr": "dans le canton d'Uri",
+        "it": "nel Cantone di Uri"
+      }
+    },
+    {
+      "code": "VD",
+      "slug": {
+        "de": "waadt",
+        "en": "vaud",
+        "fr": "vaud",
+        "it": "vaud"
+      },
+      "name": {
+        "de": "Waadt",
+        "en": "Vaud",
+        "fr": "Vaud",
+        "it": "Vaud"
+      },
+      "in": {
+        "de": "im Kanton Waadt",
+        "en": "in the canton of Vaud",
+        "fr": "dans le canton de Vaud",
+        "it": "nel Cantone di Vaud"
+      }
+    },
+    {
+      "code": "VS",
+      "slug": {
+        "de": "wallis",
+        "en": "valais",
+        "fr": "valais",
+        "it": "vallese"
+      },
+      "name": {
+        "de": "Wallis",
+        "en": "Valais",
+        "fr": "Valais",
+        "it": "Vallese"
+      },
+      "in": {
+        "de": "im Kanton Wallis",
+        "en": "in the canton of Valais",
+        "fr": "dans le canton du Valais",
+        "it": "nel Cantone del Vallese"
+      }
+    },
+    {
+      "code": "ZG",
+      "slug": {
+        "de": "zug",
+        "en": "zug",
+        "fr": "zoug",
+        "it": "zugo"
+      },
+      "name": {
+        "de": "Zug",
+        "en": "Zug",
+        "fr": "Zoug",
+        "it": "Zugo"
+      },
+      "in": {
+        "de": "im Kanton Zug",
+        "en": "in the canton of Zug",
+        "fr": "dans le canton de Zoug",
+        "it": "nel Cantone di Zugo"
+      }
+    },
+    {
+      "code": "ZH",
+      "slug": {
+        "de": "zuerich",
+        "en": "zurich",
+        "fr": "zurich",
+        "it": "zurigo"
+      },
+      "name": {
+        "de": "Zürich",
+        "en": "Zurich",
+        "fr": "Zurich",
+        "it": "Zurigo"
+      },
+      "in": {
+        "de": "im Kanton Zürich",
+        "en": "in the canton of Zurich",
+        "fr": "dans le canton de Zurich",
+        "it": "nel Cantone di Zurigo"
+      }
+    }
   ],
   "holidays": [
-    { "id": "newyear", "date": "01-01", "name": { "de": "Neujahr", "en": "New Year's Day" } },
-    { "id": "berchtold", "date": "01-02", "regions": ["BE", "GL", "JU", "LU", "NW", "OW", "SG", "SH", "SO", "TG", "VD", "VS", "ZG", "ZH"], "name": { "de": "Berchtoldstag", "en": "St Berchtold's Day" } },
-    { "id": "berchtold_p", "date": "01-02", "type": "partial", "defaultOn": true, "regions": ["AG", "FR"], "name": { "de": "Berchtoldstag", "en": "St Berchtold's Day" }, "note": { "de": "Gilt nicht im ganzen Kanton.", "en": "Not observed in the whole canton." } },
-    { "id": "berchtold_ne", "fn": "jan2IfMonday", "regions": ["NE"], "name": { "de": "Berchtoldstag", "en": "St Berchtold's Day" } },
-    { "id": "epiphany", "date": "01-06", "regions": ["SZ", "TI", "UR"], "name": { "de": "Dreikönigstag", "en": "Epiphany" } },
-    { "id": "instauration", "date": "03-01", "regions": ["NE"], "name": { "de": "Ausrufung der Republik Neuenburg", "en": "Republic Day (Neuchâtel)" } },
-    { "id": "joseph", "date": "03-19", "regions": ["NW", "SZ", "TI", "UR", "VS"], "name": { "de": "Josefstag", "en": "St Joseph's Day" } },
-    { "id": "joseph_so", "date": "03-19", "type": "partial", "defaultOn": false, "regions": ["SO"], "name": { "de": "Josefstag", "en": "St Joseph's Day" }, "note": { "de": "Nur in einzelnen Gemeinden.", "en": "Only in some municipalities." } },
-    { "id": "naefels", "fn": "naefelserFahrt", "regions": ["GL"], "name": { "de": "Näfelser Fahrt", "en": "Näfels Pilgrimage" } },
-    { "id": "goodfri", "easter": -2, "regions": ["AG", "AI", "AR", "BE", "BL", "BS", "FR", "GE", "GL", "GR", "JU", "LU", "NE", "NW", "OW", "SG", "SH", "SO", "SZ", "TG", "UR", "VD", "ZG", "ZH"], "name": { "de": "Karfreitag", "en": "Good Friday" } },
-    { "id": "eastermon", "easter": 1, "regions": ["AG", "AI", "AR", "BE", "BL", "BS", "FR", "GE", "GL", "GR", "JU", "LU", "NW", "OW", "SG", "SH", "SZ", "TG", "TI", "UR", "VD", "VS", "ZG", "ZH"], "name": { "de": "Ostermontag", "en": "Easter Monday" } },
-    { "id": "eastermon_so", "easter": 1, "type": "partial", "defaultOn": true, "regions": ["SO"], "name": { "de": "Ostermontag", "en": "Easter Monday" }, "note": { "de": "Rechtlich nicht in allen Gemeinden ein Feiertag.", "en": "Legally a holiday only in some municipalities." } },
-    { "id": "labour", "date": "05-01", "regions": ["BL", "BS", "JU", "NE", "SH", "TG", "TI", "ZH"], "name": { "de": "Tag der Arbeit", "en": "Labour Day" } },
-    { "id": "labour_p", "date": "05-01", "type": "partial", "defaultOn": false, "regions": ["AG", "SO"], "name": { "de": "Tag der Arbeit", "en": "Labour Day" }, "note": { "de": "Nur teilweise (je nach Gemeinde bzw. nur nachmittags).", "en": "Only partly (depending on the municipality, or afternoon only)." } },
-    { "id": "ascension", "easter": 39, "name": { "de": "Auffahrt", "en": "Ascension Day" } },
-    { "id": "whitmon", "easter": 50, "regions": ["AG", "AI", "AR", "BE", "BL", "BS", "FR", "GE", "GL", "GR", "JU", "LU", "NW", "OW", "SG", "SH", "SZ", "TG", "TI", "UR", "VD", "VS", "ZG", "ZH"], "name": { "de": "Pfingstmontag", "en": "Whit Monday" } },
-    { "id": "whitmon_so", "easter": 50, "type": "partial", "defaultOn": true, "regions": ["SO"], "name": { "de": "Pfingstmontag", "en": "Whit Monday" }, "note": { "de": "Rechtlich nicht in allen Gemeinden ein Feiertag.", "en": "Legally a holiday only in some municipalities." } },
-    { "id": "corpus", "easter": 60, "regions": ["AI", "JU", "LU", "NW", "OW", "SO", "SZ", "TI", "UR", "VS", "ZG"], "name": { "de": "Fronleichnam", "en": "Corpus Christi" } },
-    { "id": "corpus_fr", "easter": 60, "type": "partial", "defaultOn": true, "regions": ["FR"], "name": { "de": "Fronleichnam", "en": "Corpus Christi" }, "note": { "de": "Nicht in den reformierten Gemeinden des Seebezirks (u. a. Murten, Kerzers).", "en": "Not in the Protestant municipalities of the Lake district (e.g. Murten, Kerzers)." } },
-    { "id": "corpus_p", "easter": 60, "type": "partial", "defaultOn": false, "regions": ["AG", "NE"], "name": { "de": "Fronleichnam", "en": "Corpus Christi" }, "note": { "de": "Nur in einem Teil der Bezirke bzw. Gemeinden (Neuenburg: nur Le Landeron).", "en": "Only in some districts or municipalities (Neuchâtel: Le Landeron only)." } },
-    { "id": "plebiscite", "date": "06-23", "regions": ["JU"], "name": { "de": "Jahrestag des Juraplebiszits", "en": "Jura Independence Day" } },
-    { "id": "peterpaul", "date": "06-29", "regions": ["TI"], "name": { "de": "Peter und Paul", "en": "St Peter and St Paul" } },
-    { "id": "national", "date": "08-01", "name": { "de": "Bundesfeiertag", "en": "Swiss National Day" } },
-    { "id": "assumption", "date": "08-15", "regions": ["AI", "JU", "LU", "NW", "OW", "SO", "SZ", "TI", "UR", "VS", "ZG"], "name": { "de": "Mariä Himmelfahrt", "en": "Assumption Day" } },
-    { "id": "assumption_fr", "date": "08-15", "type": "partial", "defaultOn": true, "regions": ["FR"], "name": { "de": "Mariä Himmelfahrt", "en": "Assumption Day" }, "note": { "de": "Nicht in den reformierten Gemeinden des Seebezirks (u. a. Murten, Kerzers).", "en": "Not in the Protestant municipalities of the Lake district (e.g. Murten, Kerzers)." } },
-    { "id": "assumption_ag", "date": "08-15", "type": "partial", "defaultOn": false, "regions": ["AG"], "name": { "de": "Mariä Himmelfahrt", "en": "Assumption Day" }, "note": { "de": "Nur in einem Teil der Bezirke und Gemeinden.", "en": "Only in some districts and municipalities." } },
-    { "id": "jeune", "fn": "thuAfterFirstSunSep", "regions": ["GE"], "name": { "de": "Genfer Bettag (Jeûne genevois)", "en": "Geneva Fast (Jeûne genevois)" } },
-    { "id": "mauritius", "date": "09-22", "type": "partial", "defaultOn": true, "regions": ["AI"], "name": { "de": "Mauritiustag", "en": "St Maurice's Day" }, "note": { "de": "Nur im inneren Landesteil.", "en": "Only in the inner part of the canton." } },
-    { "id": "bruderklaus", "date": "09-25", "regions": ["OW"], "name": { "de": "Bruder-Klausen-Fest", "en": "St Nicholas of Flüe" } },
-    { "id": "lundijeune", "fn": "monAfterThirdSunSep", "regions": ["VD"], "name": { "de": "Bettagsmontag", "en": "Federal Fast Monday" } },
-    { "id": "allsaints", "date": "11-01", "regions": ["AI", "GL", "JU", "LU", "NW", "OW", "SG", "SO", "SZ", "TI", "UR", "VS", "ZG"], "name": { "de": "Allerheiligen", "en": "All Saints' Day" } },
-    { "id": "allsaints_fr", "date": "11-01", "type": "partial", "defaultOn": true, "regions": ["FR"], "name": { "de": "Allerheiligen", "en": "All Saints' Day" }, "note": { "de": "Nicht in den reformierten Gemeinden des Seebezirks (u. a. Murten, Kerzers).", "en": "Not in the Protestant municipalities of the Lake district (e.g. Murten, Kerzers)." } },
-    { "id": "allsaints_ag", "date": "11-01", "type": "partial", "defaultOn": false, "regions": ["AG"], "name": { "de": "Allerheiligen", "en": "All Saints' Day" }, "note": { "de": "Nur in einem Teil der Bezirke und Gemeinden.", "en": "Only in some districts and municipalities." } },
-    { "id": "immaculate", "date": "12-08", "regions": ["AI", "LU", "NW", "OW", "SZ", "TI", "UR", "VS", "ZG"], "name": { "de": "Mariä Empfängnis", "en": "Immaculate Conception" } },
-    { "id": "immaculate_fr", "date": "12-08", "type": "partial", "defaultOn": true, "regions": ["FR"], "name": { "de": "Mariä Empfängnis", "en": "Immaculate Conception" }, "note": { "de": "Nicht in den reformierten Gemeinden des Seebezirks (u. a. Murten, Kerzers).", "en": "Not in the Protestant municipalities of the Lake district (e.g. Murten, Kerzers)." } },
-    { "id": "immaculate_ag", "date": "12-08", "type": "partial", "defaultOn": false, "regions": ["AG"], "name": { "de": "Mariä Empfängnis", "en": "Immaculate Conception" }, "note": { "de": "Nur in einem Teil der Bezirke und Gemeinden.", "en": "Only in some districts and municipalities." } },
-    { "id": "xmas", "date": "12-25", "name": { "de": "Weihnachtstag", "en": "Christmas Day" } },
-    { "id": "stephen", "date": "12-26", "regions": ["AG", "BE", "BL", "BS", "FR", "GL", "GR", "LU", "NW", "OW", "SG", "SH", "SZ", "TG", "TI", "VS", "ZG", "ZH"], "name": { "de": "Stephanstag", "en": "St Stephen's Day" } },
-    { "id": "stephen_so", "date": "12-26", "type": "partial", "defaultOn": true, "regions": ["SO"], "name": { "de": "Stephanstag", "en": "St Stephen's Day" }, "note": { "de": "Rechtlich nicht in allen Gemeinden ein Feiertag.", "en": "Legally a holiday only in some municipalities." } },
-    { "id": "stephen_app", "fn": "dec26UnlessXmasMonFri", "regions": ["AI", "AR", "UR"], "name": { "de": "Stephanstag", "en": "St Stephen's Day" } },
-    { "id": "stephen_ne", "fn": "dec26IfMonday", "regions": ["NE"], "name": { "de": "Stephanstag", "en": "St Stephen's Day" } },
-    { "id": "restauration", "date": "12-31", "regions": ["GE"], "name": { "de": "Wiederherstellung der Republik Genf", "en": "Restoration of the Republic (Geneva)" } },
-    { "id": "xmaseve", "date": "12-24", "type": "optional", "name": { "de": "Heiligabend", "en": "Christmas Eve" }, "note": { "de": "Kein Feiertag, bei vielen Arbeitgebern aber (halb) frei.", "en": "Not a public holiday, but (half) off at many employers." } },
-    { "id": "nye", "date": "12-31", "type": "optional", "regions": ["AG", "AI", "AR", "BE", "BL", "BS", "FR", "GL", "GR", "JU", "LU", "NE", "NW", "OW", "SG", "SH", "SO", "SZ", "TG", "TI", "UR", "VD", "VS", "ZG", "ZH"], "name": { "de": "Silvester", "en": "New Year's Eve" }, "note": { "de": "Kein Feiertag, bei vielen Arbeitgebern aber (halb) frei.", "en": "Not a public holiday, but (half) off at many employers." } }
+    {
+      "id": "newyear",
+      "date": "01-01",
+      "name": {
+        "de": "Neujahr",
+        "en": "New Year's Day",
+        "fr": "Nouvel An",
+        "it": "Capodanno"
+      }
+    },
+    {
+      "id": "berchtold",
+      "date": "01-02",
+      "regions": [
+        "BE",
+        "GL",
+        "JU",
+        "LU",
+        "NW",
+        "OW",
+        "SG",
+        "SH",
+        "SO",
+        "TG",
+        "VD",
+        "VS",
+        "ZG",
+        "ZH"
+      ],
+      "name": {
+        "de": "Berchtoldstag",
+        "en": "St Berchtold's Day",
+        "fr": "Saint-Berchtold",
+        "it": "San Bertoldo"
+      }
+    },
+    {
+      "id": "berchtold_p",
+      "date": "01-02",
+      "type": "partial",
+      "defaultOn": true,
+      "regions": [
+        "AG",
+        "FR"
+      ],
+      "name": {
+        "de": "Berchtoldstag",
+        "en": "St Berchtold's Day",
+        "fr": "Saint-Berchtold",
+        "it": "San Bertoldo"
+      },
+      "note": {
+        "de": "Gilt nicht im ganzen Kanton.",
+        "en": "Not observed in the whole canton.",
+        "fr": "Pas dans tout le canton.",
+        "it": "Non in tutto il cantone."
+      }
+    },
+    {
+      "id": "berchtold_ne",
+      "fn": "jan2IfMonday",
+      "regions": [
+        "NE"
+      ],
+      "name": {
+        "de": "Berchtoldstag",
+        "en": "St Berchtold's Day",
+        "fr": "Saint-Berchtold",
+        "it": "San Bertoldo"
+      }
+    },
+    {
+      "id": "epiphany",
+      "date": "01-06",
+      "regions": [
+        "SZ",
+        "TI",
+        "UR"
+      ],
+      "name": {
+        "de": "Dreikönigstag",
+        "en": "Epiphany",
+        "fr": "Épiphanie",
+        "it": "Epifania"
+      }
+    },
+    {
+      "id": "instauration",
+      "date": "03-01",
+      "regions": [
+        "NE"
+      ],
+      "name": {
+        "de": "Ausrufung der Republik Neuenburg",
+        "en": "Republic Day (Neuchâtel)",
+        "fr": "Instauration de la République",
+        "it": "Instaurazione della Repubblica (Neuchâtel)"
+      }
+    },
+    {
+      "id": "joseph",
+      "date": "03-19",
+      "regions": [
+        "NW",
+        "SZ",
+        "TI",
+        "UR",
+        "VS"
+      ],
+      "name": {
+        "de": "Josefstag",
+        "en": "St Joseph's Day",
+        "fr": "Saint-Joseph",
+        "it": "San Giuseppe"
+      }
+    },
+    {
+      "id": "joseph_so",
+      "date": "03-19",
+      "type": "partial",
+      "defaultOn": false,
+      "regions": [
+        "SO"
+      ],
+      "name": {
+        "de": "Josefstag",
+        "en": "St Joseph's Day",
+        "fr": "Saint-Joseph",
+        "it": "San Giuseppe"
+      },
+      "note": {
+        "de": "Nur in einzelnen Gemeinden.",
+        "en": "Only in some municipalities.",
+        "fr": "Seulement dans certaines communes.",
+        "it": "Solo in alcuni comuni."
+      }
+    },
+    {
+      "id": "naefels",
+      "fn": "naefelserFahrt",
+      "regions": [
+        "GL"
+      ],
+      "name": {
+        "de": "Näfelser Fahrt",
+        "en": "Näfels Pilgrimage",
+        "fr": "Fête de Näfels",
+        "it": "Pellegrinaggio di Näfels"
+      }
+    },
+    {
+      "id": "goodfri",
+      "easter": -2,
+      "regions": [
+        "AG",
+        "AI",
+        "AR",
+        "BE",
+        "BL",
+        "BS",
+        "FR",
+        "GE",
+        "GL",
+        "GR",
+        "JU",
+        "LU",
+        "NE",
+        "NW",
+        "OW",
+        "SG",
+        "SH",
+        "SO",
+        "SZ",
+        "TG",
+        "UR",
+        "VD",
+        "ZG",
+        "ZH"
+      ],
+      "name": {
+        "de": "Karfreitag",
+        "en": "Good Friday",
+        "fr": "Vendredi saint",
+        "it": "Venerdì Santo"
+      }
+    },
+    {
+      "id": "eastermon",
+      "easter": 1,
+      "regions": [
+        "AG",
+        "AI",
+        "AR",
+        "BE",
+        "BL",
+        "BS",
+        "FR",
+        "GE",
+        "GL",
+        "GR",
+        "JU",
+        "LU",
+        "NW",
+        "OW",
+        "SG",
+        "SH",
+        "SZ",
+        "TG",
+        "TI",
+        "UR",
+        "VD",
+        "VS",
+        "ZG",
+        "ZH"
+      ],
+      "name": {
+        "de": "Ostermontag",
+        "en": "Easter Monday",
+        "fr": "Lundi de Pâques",
+        "it": "Lunedì di Pasqua"
+      }
+    },
+    {
+      "id": "eastermon_so",
+      "easter": 1,
+      "type": "partial",
+      "defaultOn": true,
+      "regions": [
+        "SO"
+      ],
+      "name": {
+        "de": "Ostermontag",
+        "en": "Easter Monday",
+        "fr": "Lundi de Pâques",
+        "it": "Lunedì di Pasqua"
+      },
+      "note": {
+        "de": "Rechtlich nicht in allen Gemeinden ein Feiertag.",
+        "en": "Legally a holiday only in some municipalities.",
+        "fr": "Légalement férié seulement dans certaines communes.",
+        "it": "Festivo per legge solo in alcuni comuni."
+      }
+    },
+    {
+      "id": "labour",
+      "date": "05-01",
+      "regions": [
+        "BL",
+        "BS",
+        "JU",
+        "NE",
+        "SH",
+        "TG",
+        "TI",
+        "ZH"
+      ],
+      "name": {
+        "de": "Tag der Arbeit",
+        "en": "Labour Day",
+        "fr": "Fête du travail",
+        "it": "Festa dei lavoratori"
+      }
+    },
+    {
+      "id": "labour_p",
+      "date": "05-01",
+      "type": "partial",
+      "defaultOn": false,
+      "regions": [
+        "AG",
+        "SO"
+      ],
+      "name": {
+        "de": "Tag der Arbeit",
+        "en": "Labour Day",
+        "fr": "Fête du travail",
+        "it": "Festa dei lavoratori"
+      },
+      "note": {
+        "de": "Nur teilweise (je nach Gemeinde bzw. nur nachmittags).",
+        "en": "Only partly (depending on the municipality, or afternoon only).",
+        "fr": "Seulement en partie (selon la commune, ou l’après-midi seulement).",
+        "it": "Solo in parte (a seconda del comune, o solo il pomeriggio)."
+      }
+    },
+    {
+      "id": "ascension",
+      "easter": 39,
+      "name": {
+        "de": "Auffahrt",
+        "en": "Ascension Day",
+        "fr": "Ascension",
+        "it": "Ascensione"
+      }
+    },
+    {
+      "id": "whitmon",
+      "easter": 50,
+      "regions": [
+        "AG",
+        "AI",
+        "AR",
+        "BE",
+        "BL",
+        "BS",
+        "FR",
+        "GE",
+        "GL",
+        "GR",
+        "JU",
+        "LU",
+        "NW",
+        "OW",
+        "SG",
+        "SH",
+        "SZ",
+        "TG",
+        "TI",
+        "UR",
+        "VD",
+        "VS",
+        "ZG",
+        "ZH"
+      ],
+      "name": {
+        "de": "Pfingstmontag",
+        "en": "Whit Monday",
+        "fr": "Lundi de Pentecôte",
+        "it": "Lunedì di Pentecoste"
+      }
+    },
+    {
+      "id": "whitmon_so",
+      "easter": 50,
+      "type": "partial",
+      "defaultOn": true,
+      "regions": [
+        "SO"
+      ],
+      "name": {
+        "de": "Pfingstmontag",
+        "en": "Whit Monday",
+        "fr": "Lundi de Pentecôte",
+        "it": "Lunedì di Pentecoste"
+      },
+      "note": {
+        "de": "Rechtlich nicht in allen Gemeinden ein Feiertag.",
+        "en": "Legally a holiday only in some municipalities.",
+        "fr": "Légalement férié seulement dans certaines communes.",
+        "it": "Festivo per legge solo in alcuni comuni."
+      }
+    },
+    {
+      "id": "corpus",
+      "easter": 60,
+      "regions": [
+        "AI",
+        "JU",
+        "LU",
+        "NW",
+        "OW",
+        "SO",
+        "SZ",
+        "TI",
+        "UR",
+        "VS",
+        "ZG"
+      ],
+      "name": {
+        "de": "Fronleichnam",
+        "en": "Corpus Christi",
+        "fr": "Fête-Dieu",
+        "it": "Corpus Domini"
+      }
+    },
+    {
+      "id": "corpus_fr",
+      "easter": 60,
+      "type": "partial",
+      "defaultOn": true,
+      "regions": [
+        "FR"
+      ],
+      "name": {
+        "de": "Fronleichnam",
+        "en": "Corpus Christi",
+        "fr": "Fête-Dieu",
+        "it": "Corpus Domini"
+      },
+      "note": {
+        "de": "Nicht in den reformierten Gemeinden des Seebezirks (u. a. Murten, Kerzers).",
+        "en": "Not in the Protestant municipalities of the Lake district (e.g. Murten, Kerzers).",
+        "fr": "Pas dans les communes réformées du district du Lac (p. ex. Morat, Chiètres).",
+        "it": "Non nei comuni riformati del distretto del Lago (p. es. Morat, Kerzers)."
+      }
+    },
+    {
+      "id": "corpus_p",
+      "easter": 60,
+      "type": "partial",
+      "defaultOn": false,
+      "regions": [
+        "AG",
+        "NE"
+      ],
+      "name": {
+        "de": "Fronleichnam",
+        "en": "Corpus Christi",
+        "fr": "Fête-Dieu",
+        "it": "Corpus Domini"
+      },
+      "note": {
+        "de": "Nur in einem Teil der Bezirke bzw. Gemeinden (Neuenburg: nur Le Landeron).",
+        "en": "Only in some districts or municipalities (Neuchâtel: Le Landeron only).",
+        "fr": "Seulement dans une partie des districts ou communes (Neuchâtel : Le Landeron uniquement).",
+        "it": "Solo in alcuni distretti o comuni (Neuchâtel: solo Le Landeron)."
+      }
+    },
+    {
+      "id": "plebiscite",
+      "date": "06-23",
+      "regions": [
+        "JU"
+      ],
+      "name": {
+        "de": "Jahrestag des Juraplebiszits",
+        "en": "Jura Independence Day",
+        "fr": "Commémoration du plébiscite jurassien",
+        "it": "Anniversario del plebiscito giurassiano"
+      }
+    },
+    {
+      "id": "peterpaul",
+      "date": "06-29",
+      "regions": [
+        "TI"
+      ],
+      "name": {
+        "de": "Peter und Paul",
+        "en": "St Peter and St Paul",
+        "fr": "Saint-Pierre et Saint-Paul",
+        "it": "Santi Pietro e Paolo"
+      }
+    },
+    {
+      "id": "national",
+      "date": "08-01",
+      "name": {
+        "de": "Bundesfeiertag",
+        "en": "Swiss National Day",
+        "fr": "Fête nationale",
+        "it": "Festa nazionale"
+      }
+    },
+    {
+      "id": "assumption",
+      "date": "08-15",
+      "regions": [
+        "AI",
+        "JU",
+        "LU",
+        "NW",
+        "OW",
+        "SO",
+        "SZ",
+        "TI",
+        "UR",
+        "VS",
+        "ZG"
+      ],
+      "name": {
+        "de": "Mariä Himmelfahrt",
+        "en": "Assumption Day",
+        "fr": "Assomption",
+        "it": "Assunzione"
+      }
+    },
+    {
+      "id": "assumption_fr",
+      "date": "08-15",
+      "type": "partial",
+      "defaultOn": true,
+      "regions": [
+        "FR"
+      ],
+      "name": {
+        "de": "Mariä Himmelfahrt",
+        "en": "Assumption Day",
+        "fr": "Assomption",
+        "it": "Assunzione"
+      },
+      "note": {
+        "de": "Nicht in den reformierten Gemeinden des Seebezirks (u. a. Murten, Kerzers).",
+        "en": "Not in the Protestant municipalities of the Lake district (e.g. Murten, Kerzers).",
+        "fr": "Pas dans les communes réformées du district du Lac (p. ex. Morat, Chiètres).",
+        "it": "Non nei comuni riformati del distretto del Lago (p. es. Morat, Kerzers)."
+      }
+    },
+    {
+      "id": "assumption_ag",
+      "date": "08-15",
+      "type": "partial",
+      "defaultOn": false,
+      "regions": [
+        "AG"
+      ],
+      "name": {
+        "de": "Mariä Himmelfahrt",
+        "en": "Assumption Day",
+        "fr": "Assomption",
+        "it": "Assunzione"
+      },
+      "note": {
+        "de": "Nur in einem Teil der Bezirke und Gemeinden.",
+        "en": "Only in some districts and municipalities.",
+        "fr": "Seulement dans une partie des districts et communes.",
+        "it": "Solo in alcuni distretti e comuni."
+      }
+    },
+    {
+      "id": "jeune",
+      "fn": "thuAfterFirstSunSep",
+      "regions": [
+        "GE"
+      ],
+      "name": {
+        "de": "Genfer Bettag (Jeûne genevois)",
+        "en": "Geneva Fast (Jeûne genevois)",
+        "fr": "Jeûne genevois",
+        "it": "Digiuno ginevrino"
+      }
+    },
+    {
+      "id": "mauritius",
+      "date": "09-22",
+      "type": "partial",
+      "defaultOn": true,
+      "regions": [
+        "AI"
+      ],
+      "name": {
+        "de": "Mauritiustag",
+        "en": "St Maurice's Day",
+        "fr": "Saint-Maurice",
+        "it": "San Maurizio"
+      },
+      "note": {
+        "de": "Nur im inneren Landesteil.",
+        "en": "Only in the inner part of the canton.",
+        "fr": "Seulement dans la partie intérieure du canton.",
+        "it": "Solo nella parte interna del cantone."
+      }
+    },
+    {
+      "id": "bruderklaus",
+      "date": "09-25",
+      "regions": [
+        "OW"
+      ],
+      "name": {
+        "de": "Bruder-Klausen-Fest",
+        "en": "St Nicholas of Flüe",
+        "fr": "Saint Nicolas de Flüe",
+        "it": "San Nicolao della Flüe"
+      }
+    },
+    {
+      "id": "lundijeune",
+      "fn": "monAfterThirdSunSep",
+      "regions": [
+        "VD"
+      ],
+      "name": {
+        "de": "Bettagsmontag",
+        "en": "Federal Fast Monday",
+        "fr": "Lundi du Jeûne fédéral",
+        "it": "Lunedì del Digiuno federale"
+      }
+    },
+    {
+      "id": "allsaints",
+      "date": "11-01",
+      "regions": [
+        "AI",
+        "GL",
+        "JU",
+        "LU",
+        "NW",
+        "OW",
+        "SG",
+        "SO",
+        "SZ",
+        "TI",
+        "UR",
+        "VS",
+        "ZG"
+      ],
+      "name": {
+        "de": "Allerheiligen",
+        "en": "All Saints' Day",
+        "fr": "Toussaint",
+        "it": "Ognissanti"
+      }
+    },
+    {
+      "id": "allsaints_fr",
+      "date": "11-01",
+      "type": "partial",
+      "defaultOn": true,
+      "regions": [
+        "FR"
+      ],
+      "name": {
+        "de": "Allerheiligen",
+        "en": "All Saints' Day",
+        "fr": "Toussaint",
+        "it": "Ognissanti"
+      },
+      "note": {
+        "de": "Nicht in den reformierten Gemeinden des Seebezirks (u. a. Murten, Kerzers).",
+        "en": "Not in the Protestant municipalities of the Lake district (e.g. Murten, Kerzers).",
+        "fr": "Pas dans les communes réformées du district du Lac (p. ex. Morat, Chiètres).",
+        "it": "Non nei comuni riformati del distretto del Lago (p. es. Morat, Kerzers)."
+      }
+    },
+    {
+      "id": "allsaints_ag",
+      "date": "11-01",
+      "type": "partial",
+      "defaultOn": false,
+      "regions": [
+        "AG"
+      ],
+      "name": {
+        "de": "Allerheiligen",
+        "en": "All Saints' Day",
+        "fr": "Toussaint",
+        "it": "Ognissanti"
+      },
+      "note": {
+        "de": "Nur in einem Teil der Bezirke und Gemeinden.",
+        "en": "Only in some districts and municipalities.",
+        "fr": "Seulement dans une partie des districts et communes.",
+        "it": "Solo in alcuni distretti e comuni."
+      }
+    },
+    {
+      "id": "immaculate",
+      "date": "12-08",
+      "regions": [
+        "AI",
+        "LU",
+        "NW",
+        "OW",
+        "SZ",
+        "TI",
+        "UR",
+        "VS",
+        "ZG"
+      ],
+      "name": {
+        "de": "Mariä Empfängnis",
+        "en": "Immaculate Conception",
+        "fr": "Immaculée Conception",
+        "it": "Immacolata Concezione"
+      }
+    },
+    {
+      "id": "immaculate_fr",
+      "date": "12-08",
+      "type": "partial",
+      "defaultOn": true,
+      "regions": [
+        "FR"
+      ],
+      "name": {
+        "de": "Mariä Empfängnis",
+        "en": "Immaculate Conception",
+        "fr": "Immaculée Conception",
+        "it": "Immacolata Concezione"
+      },
+      "note": {
+        "de": "Nicht in den reformierten Gemeinden des Seebezirks (u. a. Murten, Kerzers).",
+        "en": "Not in the Protestant municipalities of the Lake district (e.g. Murten, Kerzers).",
+        "fr": "Pas dans les communes réformées du district du Lac (p. ex. Morat, Chiètres).",
+        "it": "Non nei comuni riformati del distretto del Lago (p. es. Morat, Kerzers)."
+      }
+    },
+    {
+      "id": "immaculate_ag",
+      "date": "12-08",
+      "type": "partial",
+      "defaultOn": false,
+      "regions": [
+        "AG"
+      ],
+      "name": {
+        "de": "Mariä Empfängnis",
+        "en": "Immaculate Conception",
+        "fr": "Immaculée Conception",
+        "it": "Immacolata Concezione"
+      },
+      "note": {
+        "de": "Nur in einem Teil der Bezirke und Gemeinden.",
+        "en": "Only in some districts and municipalities.",
+        "fr": "Seulement dans une partie des districts et communes.",
+        "it": "Solo in alcuni distretti e comuni."
+      }
+    },
+    {
+      "id": "xmas",
+      "date": "12-25",
+      "name": {
+        "de": "Weihnachtstag",
+        "en": "Christmas Day",
+        "fr": "Noël",
+        "it": "Natale"
+      }
+    },
+    {
+      "id": "stephen",
+      "date": "12-26",
+      "regions": [
+        "AG",
+        "BE",
+        "BL",
+        "BS",
+        "FR",
+        "GL",
+        "GR",
+        "LU",
+        "NW",
+        "OW",
+        "SG",
+        "SH",
+        "SZ",
+        "TG",
+        "TI",
+        "VS",
+        "ZG",
+        "ZH"
+      ],
+      "name": {
+        "de": "Stephanstag",
+        "en": "St Stephen's Day",
+        "fr": "Saint-Étienne",
+        "it": "Santo Stefano"
+      }
+    },
+    {
+      "id": "stephen_so",
+      "date": "12-26",
+      "type": "partial",
+      "defaultOn": true,
+      "regions": [
+        "SO"
+      ],
+      "name": {
+        "de": "Stephanstag",
+        "en": "St Stephen's Day",
+        "fr": "Saint-Étienne",
+        "it": "Santo Stefano"
+      },
+      "note": {
+        "de": "Rechtlich nicht in allen Gemeinden ein Feiertag.",
+        "en": "Legally a holiday only in some municipalities.",
+        "fr": "Légalement férié seulement dans certaines communes.",
+        "it": "Festivo per legge solo in alcuni comuni."
+      }
+    },
+    {
+      "id": "stephen_app",
+      "fn": "dec26UnlessXmasMonFri",
+      "regions": [
+        "AI",
+        "AR",
+        "UR"
+      ],
+      "name": {
+        "de": "Stephanstag",
+        "en": "St Stephen's Day",
+        "fr": "Saint-Étienne",
+        "it": "Santo Stefano"
+      }
+    },
+    {
+      "id": "stephen_ne",
+      "fn": "dec26IfMonday",
+      "regions": [
+        "NE"
+      ],
+      "name": {
+        "de": "Stephanstag",
+        "en": "St Stephen's Day",
+        "fr": "Saint-Étienne",
+        "it": "Santo Stefano"
+      }
+    },
+    {
+      "id": "restauration",
+      "date": "12-31",
+      "regions": [
+        "GE"
+      ],
+      "name": {
+        "de": "Wiederherstellung der Republik Genf",
+        "en": "Restoration of the Republic (Geneva)",
+        "fr": "Restauration de la République",
+        "it": "Restaurazione della Repubblica (Ginevra)"
+      }
+    },
+    {
+      "id": "xmaseve",
+      "date": "12-24",
+      "type": "optional",
+      "name": {
+        "de": "Heiligabend",
+        "en": "Christmas Eve",
+        "fr": "Veille de Noël",
+        "it": "Vigilia di Natale"
+      },
+      "note": {
+        "de": "Kein Feiertag, bei vielen Arbeitgebern aber (halb) frei.",
+        "en": "Not a public holiday, but (half) off at many employers.",
+        "fr": "Pas un jour férié, mais (demi-)journée de congé chez de nombreux employeurs.",
+        "it": "Non è un giorno festivo, ma molti datori di lavoro concedono la (mezza) giornata libera."
+      }
+    },
+    {
+      "id": "nye",
+      "date": "12-31",
+      "type": "optional",
+      "regions": [
+        "AG",
+        "AI",
+        "AR",
+        "BE",
+        "BL",
+        "BS",
+        "FR",
+        "GL",
+        "GR",
+        "JU",
+        "LU",
+        "NE",
+        "NW",
+        "OW",
+        "SG",
+        "SH",
+        "SO",
+        "SZ",
+        "TG",
+        "TI",
+        "UR",
+        "VD",
+        "VS",
+        "ZG",
+        "ZH"
+      ],
+      "name": {
+        "de": "Silvester",
+        "en": "New Year's Eve",
+        "fr": "Saint-Sylvestre",
+        "it": "San Silvestro"
+      },
+      "note": {
+        "de": "Kein Feiertag, bei vielen Arbeitgebern aber (halb) frei.",
+        "en": "Not a public holiday, but (half) off at many employers.",
+        "fr": "Pas un jour férié, mais (demi-)journée de congé chez de nombreux employeurs.",
+        "it": "Non è un giorno festivo, ma molti datori di lavoro concedono la (mezza) giornata libera."
+      }
+    }
   ]
 }

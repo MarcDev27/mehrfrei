@@ -28,12 +28,19 @@ const plural = (n, a, b) => (n === 1 ? a : b);
 const dot = s => (/\.$/.test(s) ? s : s + '.');
 const yr = s => s.replace('{year}', Y);
 function url(p) { return cfg.baseUrl.replace(/\/$/, '') + p; }
-function homeUrl(l) { return l === 'en' ? '/en/' : '/'; }
+function homeUrl(l) { return l === 'de' ? '/' : `/${l}/`; }
 function countryUrl(cc, l) { return '/' + yr(countries[cc].path[l]) + '/'; }
 function regionUrl(cc, r, l) { return countryUrl(cc, l) + r.slug[l] + '/'; }
-function productUrl(l) { return l === 'en' ? `/en/leave-planner-${Y}/` : `/urlaubsplaner-${Y}/`; }
-function legalUrl(kind, l) { return l === 'en' ? (kind === 'imprint' ? '/en/imprint/' : '/en/privacy/') : (kind === 'imprint' ? '/impressum/' : '/datenschutz/'); }
-function locale(l, cc) { return l === 'en' ? 'en' : (cc === 'at' ? 'de-AT' : cc === 'de' ? 'de-DE' : cc === 'ch' ? 'de-CH' : 'de'); }
+function productUrl(l) { return ({ de: `/urlaubsplaner-${Y}/`, en: `/en/leave-planner-${Y}/`, fr: `/fr/planificateur-conges-${Y}/`, it: `/it/pianificatore-ferie-${Y}/` })[l]; }
+function legalUrl(kind, l) { return ({ de: ['/impressum/', '/datenschutz/'], en: ['/en/imprint/', '/en/privacy/'], fr: ['/fr/mentions-legales/', '/fr/confidentialite/'], it: ['/it/note-legali/', '/it/privacy/'] })[l][kind === 'imprint' ? 0 : 1]; }
+function locale(l, cc) { if (l === 'fr' || l === 'it') return l + '-CH'; return l === 'en' ? 'en' : (cc === 'at' ? 'de-AT' : cc === 'de' ? 'de-DE' : cc === 'ch' ? 'de-CH' : 'de'); }
+const LANGS = ['de', 'en', 'fr', 'it'];
+function langsOf(cc) { return (cfg.languages && cfg.languages[cc]) || ['de', 'en']; }
+// hreflang alternates for a page that exists in the languages of `cc` (or all languages when cc is null)
+function alternates(cc, fn) {
+  const ls = cc ? langsOf(cc) : LANGS;
+  return ls.map(l => ({ hreflang: cc ? locale(l, cc) : l, href: fn(l) })).concat([{ hreflang: 'x-default', href: fn('de') }]);
+}
 function key(cc, code) { return cc + '-' + code; }
 
 function regionData(cc, r) {
@@ -61,7 +68,7 @@ function swissify(html, lang) {
     .replace(/Kollektiv- bzw\. Tarifvertrag/g, 'Gesamtarbeitsvertrag')
     .replace(/ß/g, 'ss');
 }
-function writeCC(cc, lang, rel, html) { write(rel, cc === 'ch' ? swissify(html, lang) : html); }
+function writeCC(cc, lang, rel, html) { write(rel, cc === 'ch' && (lang === 'de' || lang === 'en') ? swissify(html, lang) : html); }
 function write(rel, html) {
   const file = path.join(DIST, rel.endsWith('/') ? rel + 'index.html' : rel);
   fs.mkdirSync(path.dirname(file), { recursive: true });
@@ -76,14 +83,25 @@ function adSlot(name) {
   return cfg.showAdPlaceholders ? `<div class="wrap"><div class="ad-slot ad-slot--ph" aria-hidden="true">Anzeigenfläche (${name})</div></div>` : '';
 }
 
+const UI = {
+  de: { main: 'Hauptmenü', legal: 'Rechtliches', imprint: 'Impressum', privacy: 'Datenschutz', product: 'Urlaubsplaner zum Ausdrucken',
+    footer: 'Alle Termine sorgfältig mit amtlichen Quellen abgeglichen, aber ohne Gewähr. Welche Tage du tatsächlich frei hast, regeln Arbeitsvertrag und Kollektiv- bzw. Tarifvertrag.' },
+  en: { main: 'Main', legal: 'Legal', imprint: 'Imprint', privacy: 'Privacy', product: 'Printable planner',
+    footer: 'All dates carefully checked against official sources, but without guarantee. Your employment contract and collective agreement decide which days you actually get off.' },
+  fr: { main: 'Menu principal', legal: 'Informations légales', imprint: 'Mentions légales', privacy: 'Confidentialité', product: 'Planificateur à imprimer',
+    footer: 'Toutes les dates sont vérifiées avec soin à partir de sources officielles, mais sans garantie. C’est votre contrat de travail et votre convention collective qui déterminent les jours où vous êtes réellement libre.' },
+  it: { main: 'Menu principale', legal: 'Note legali', imprint: 'Note legali', privacy: 'Privacy', product: 'Pianificatore da stampare',
+    footer: 'Tutte le date sono verificate con cura su fonti ufficiali, ma senza garanzia. Sono il contratto di lavoro e il contratto collettivo a stabilire quali giorni hai effettivamente liberi.' }
+};
+const LANG_NAME = { de: 'Deutsch', en: 'English', fr: 'Français', it: 'Italiano' };
 function page({ lang, cc, title, desc, path: p, alt, h1, crumbs, body, jsonld, data, noindex }) {
-  const T = lang === 'en';
+  const T = lang === 'en', U = UI[lang];
   const altLinks = (alt || []).map(a => `<link rel="alternate" hreflang="${a.hreflang}" href="${url(a.href)}">`).join('\n  ');
   const ld = (jsonld || []).map(j => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n  ');
-  const other = (alt || []).find(a => a.hreflang !== 'x-default' && !a.hreflang.startsWith(lang));
-  const nav = T
-    ? `<a href="${countryUrl('at', 'en')}">Austria</a><a href="${countryUrl('de', 'en')}">Germany</a><a href="${countryUrl('ch', 'en')}">Switzerland</a><a class="nav-product" href="${productUrl('en')}">Printable planner</a>`
-    : `<a href="${countryUrl('at', 'de')}">Österreich</a><a href="${countryUrl('de', 'de')}">Deutschland</a><a href="${countryUrl('ch', 'de')}">Schweiz</a><a class="nav-product" href="${productUrl('de')}">Urlaubsplaner zum Ausdrucken</a>`;
+  const others = (alt || []).filter(a => a.hreflang !== 'x-default' && a.hreflang.slice(0, 2) !== lang);
+  const langLinks = others.map(a => { const l = a.hreflang.slice(0, 2); return `<a class="lang" href="${a.href}" hreflang="${a.hreflang}" lang="${l}" title="${LANG_NAME[l]}">${others.length > 1 ? l.toUpperCase() : LANG_NAME[l]}</a>`; }).join('');
+  const countryLinks = cfg.countries.filter(c => langsOf(c).includes(lang)).map(c => `<a href="${countryUrl(c, lang)}">${esc(countries[c].name[lang])}</a>`).join('');
+  const nav = `${countryLinks}<a class="nav-product" href="${productUrl(lang)}">${U.product}</a>`;
   if (!noindex) {
     sitemap.push({ loc: p, alt: (alt || []).filter(a => a.hreflang !== 'x-default') });
     llms.push({ lang, title, href: p, desc });
@@ -113,7 +131,7 @@ function page({ lang, cc, title, desc, path: p, alt, h1, crumbs, body, jsonld, d
 <body>
   <header class="wrap top">
     <a class="brand" href="${homeUrl(lang)}"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>${esc(cfg.siteName)}</a>
-    <nav class="nav" aria-label="${T ? 'Main' : 'Hauptmenü'}">${nav}${other ? `<a class="lang" href="${other.href}" hreflang="${other.hreflang}" lang="${other.hreflang.slice(0, 2)}">${other.hreflang.startsWith('en') ? 'English' : 'Deutsch'}</a>` : ''}</nav>
+    <nav class="nav" aria-label="${U.main}">${nav}${langLinks}</nav>
   </header>
   <main>
     <div class="wrap intro">
@@ -125,12 +143,12 @@ function page({ lang, cc, title, desc, path: p, alt, h1, crumbs, body, jsonld, d
   </main>
   <footer>
     <div class="wrap">
-      <nav aria-label="${T ? 'Legal' : 'Rechtliches'}">
-        <a href="${legalUrl('imprint', lang)}">${T ? 'Imprint' : 'Impressum'}</a>
-        <a href="${legalUrl('privacy', lang)}">${T ? 'Privacy' : 'Datenschutz'}</a>
-        <a href="${productUrl(lang)}">${T ? 'Printable planner' : 'Urlaubsplaner zum Ausdrucken'}</a>
+      <nav aria-label="${U.legal}">
+        <a href="${legalUrl('imprint', lang)}">${U.imprint}</a>
+        <a href="${legalUrl('privacy', lang)}">${U.privacy}</a>
+        <a href="${productUrl(lang)}">${U.product}</a>
       </nav>
-      <p>${T ? `All dates carefully checked against official sources, but without guarantee. Your employment contract and collective agreement decide which days you actually get off.` : `Alle Termine sorgfältig mit amtlichen Quellen abgeglichen, aber ohne Gewähr. Welche Tage du tatsächlich frei hast, regeln Arbeitsvertrag und Kollektiv- bzw. Tarifvertrag.`} © ${Y - 1} ${esc(cfg.siteName)}</p>
+      <p>${U.footer} © ${Y - 1} ${esc(cfg.siteName)}</p>
     </div>
   </footer>
   ${data ? `<script type="application/json" id="planner-data">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>
@@ -141,7 +159,7 @@ function page({ lang, cc, title, desc, path: p, alt, h1, crumbs, body, jsonld, d
 
 // ---------- planner block ----------
 function smartLabel(lang, scope) {
-  if (lang === 'en') return S.en.modes.smart;
+  if (lang !== 'de') return S[lang].modes.smart;
   if (scope === 'at') return 'Fenstertage und echte Urlaube';
   if (scope === 'de') return 'Brückentage und echte Urlaube';
   if (scope === 'ch') return 'Brückentage und echte Ferien';
@@ -168,7 +186,7 @@ function planner(lang, scope, regionKeys, selected) {
   const html = `
     <section class="planner" id="planner" aria-labelledby="planner-h">
       <div class="wrap">
-        <h2 id="planner-h" class="sr-only">${lang === 'en' ? `Leave planner ${Y}` : `Urlaubsplaner ${Y}`}</h2>
+        <h2 id="planner-h" class="sr-only">${({ de: 'Urlaubsplaner', en: 'Leave planner', fr: 'Planificateur de congés', it: 'Pianificatore ferie' })[lang]} ${Y}</h2>
         <div class="planner-head">
           <form class="controls" onsubmit="return false">
             ${select}
@@ -203,7 +221,7 @@ function planner(lang, scope, regionKeys, selected) {
           <li><span class="sw sw--hol"></span>${T.legend.hol}</li>
           <li><span class="sw sw--brk"></span>${T.legend.brk}</li>
           <li><span class="sw sw--we"></span>${T.legend.we}</li>
-          <li><span class="sw sw--sch"></span>${T.legend.school}</li>
+          ${Object.values(regions).some(x => x.school.length) ? `<li><span class="sw sw--sch"></span>${T.legend.school}</li>` : ''}
         </ul>
       </div>
     </section>`;
@@ -212,7 +230,20 @@ function planner(lang, scope, regionKeys, selected) {
 }
 
 // ---------- content blocks ----------
+const TX = {
+  fr: { notStat: 'pas férié selon la loi', local: 'local', weekend: 'week-end', off: 'chômé', source: 'Source', date: 'Date', wd: 'Jour', hol: 'Jour férié' },
+  it: { notStat: 'non festivo per legge', local: 'locale', weekend: 'fine settimana', off: 'giorno libero', source: 'Fonte', date: 'Data', wd: 'Giorno', hol: 'Festività' }
+};
 function holidayTable(rd, lang, cc) {
+  if (TX[lang]) {
+    const X = TX[lang];
+    const rows = rd.holidays.filter(h => h.date.startsWith(String(Y))).map(h => {
+      const w = C.dow(C.parseISO(h.date)), we = w === 0 || w === 6;
+      const tag = h.type === 'optional' ? X.notStat : h.type === 'partial' ? X.local : we ? X.weekend : X.off;
+      return `<tr${we ? ' class="is-weekend"' : ''}><td>${esc(C.fmtDate(h.date, lang, cc, true))}</td><td>${C.weekday(h.date, lang)}</td><td>${esc(h.name[lang])} <span class="tag${!we && h.type === 'public' ? ' tag--work' : ''}">${tag}</span>${h.note ? `<small>${esc(h.note[lang])}</small>` : ''}</td></tr>`;
+    }).join('');
+    return `<div class="table-scroll"><table><thead><tr><th>${X.date}</th><th>${X.wd}</th><th>${X.hol}</th></tr></thead><tbody>${rows}</tbody></table></div><p class="source">${X.source} : ${esc(countries[cc].holidaySource[lang])}</p>`.replace(`${TX.it.source} : `, `${TX.it.source}: `);
+  }
   const T = lang === 'en';
   const rows = rd.holidays.filter(h => h.date.startsWith(String(Y))).map(h => {
     const w = C.dow(C.parseISO(h.date)), we = w === 0 || w === 6;
@@ -236,7 +267,23 @@ function schoolTable(rd, lang, cc) {
   <p class="source">${T ? 'Source' : 'Quelle'}: ${esc(countries[cc].schoolSource[lang])} ${T ? 'Individual schools may add movable days off.' : 'Einzelne Schulen können zusätzliche schulautonome bzw. bewegliche Tage festlegen.'}</p>`;
 }
 
+function fromTo(a, b, lang, cc) {
+  return lang === 'fr' ? `du ${C.fmtDate(a, lang, cc)} au ${C.fmtDate(b, lang, cc)}` : `dal ${C.fmtDate(a, lang, cc)} al ${C.fmtDate(b, lang, cc)}`;
+}
 function bridgeList(bridges, rd, lang, cc) {
+  if (lang === 'fr' || lang === 'it') {
+    const F = lang === 'fr';
+    const holName = d => (rd.holidays.find(h => h.date === d && h.on) || {}).name[lang];
+    return `<ul class="bridges">` + bridges.map(b => {
+      const best = b.best, first = b.holidays[0];
+      const dates = best.leave.map(d => C.fmtDate(d, lang, cc, false, true)).join(', ');
+      const main = F
+        ? `<span class="bridge-ratio"><mark>${best.cost} ${plural(best.cost, 'jour de vacances', 'jours de vacances')}</mark> pour ${best.len} jours libres</span> : posez ${esc(dates)}, libre ${esc(fromTo(best.from, best.to, lang, cc))}.`
+        : `<span class="bridge-ratio"><mark>${best.cost} ${plural(best.cost, 'giorno di ferie', 'giorni di ferie')}</mark> per ${best.len} giorni liberi</span>: prendi ${esc(dates)}, libero ${esc(fromTo(best.from, best.to, lang, cc))}.`;
+      const alt = b.long ? `<span class="bridge-alt">${F ? `Ou ${b.long.cost} jours de vacances pour ${b.long.len} jours libres (${esc(fromTo(b.long.from, b.long.to, lang, cc))}).` : `Oppure ${b.long.cost} giorni di ferie per ${b.long.len} giorni liberi (${esc(fromTo(b.long.from, b.long.to, lang, cc))}).`}</span>` : '';
+      return `<li><span class="bridge-hol">${esc(b.holidays.map(holName).join(', '))}<small>${esc(C.weekday(first, lang))} ${esc(C.fmtDate(first, lang, cc, true))}</small></span><span>${main} ${alt}</span></li>`;
+    }).join('') + `</ul>`;
+  }
   const T = lang === 'en';
   const holName = d => (rd.holidays.find(h => h.date === d && h.on) || {}).name[lang];
   return `<ul class="bridges">` + bridges.map(b => {
@@ -268,6 +315,8 @@ function appLd(lang, name, p) {
 }
 
 function ctaBlock(lang, cc, regionName, noSchool) {
+  if (lang === 'fr') return `<div class="wrap"><aside class="cta"><div><h2>Planifiez ${Y} sur papier ou dans Excel</h2><p>Un calendrier annuel à imprimer avec tous les jours fériés${regionName ? ' du canton de ' + esc(regionName) : ''}, et un tableur qui compte vos jours de vacances restants et montre les chevauchements dans l’équipe ou entre les deux parents.</p></div><a class="btn" href="${productUrl(lang)}">Voir le planificateur</a></aside></div>`;
+  if (lang === 'it') return `<div class="wrap"><aside class="cta"><div><h2>Pianifica il ${Y} su carta o in Excel</h2><p>Un calendario annuale da stampare con tutti i giorni festivi${regionName ? ' del Cantone ' + esc(regionName) : ''}, più un foglio di calcolo che conta le ferie residue e mostra le sovrapposizioni nel team o tra i due genitori.</p></div><a class="btn" href="${productUrl(lang)}">Scopri il pianificatore</a></aside></div>`;
   const T = lang === 'en';
   const h = T ? `Plan ${Y} on paper or in Excel` : `${Y} auf Papier oder in Excel planen`;
   const t = T
@@ -279,7 +328,7 @@ function ctaBlock(lang, cc, regionName, noSchool) {
 function regionLinks(cc, lang, currentCode) {
   return `<ul class="regions">` + countries[cc].regions.map(r => r.code === currentCode
     ? `<li><span aria-current="page">${esc(r.name[lang])}</span></li>`
-    : `<li><a href="${regionUrl(cc, r, lang)}">${esc(countries[cc].term[lang].replace(/^./, c => c.toUpperCase()))} ${Y} ${esc(r.in[lang])}</a></li>`).join('') + `</ul>`;
+    : `<li><a href="${regionUrl(cc, r, lang)}">${esc(lang === 'fr' ? `Jours fériés ${Y} ${r.in.fr}` : lang === 'it' ? `Giorni festivi ${Y} ${r.in.it}` : `${countries[cc].term[lang].replace(/^./, c => c.toUpperCase())} ${Y} ${r.in[lang]}`)}</a></li>`).join('') + `</ul>`;
 }
 
 // ---------- region page ----------
@@ -300,7 +349,8 @@ function regionPage(cc, r, lang) {
   const p = regionUrl(cc, r, lang);
   const other = regionUrl(cc, r, T ? 'de' : 'en');
   const hrefDe = regionUrl(cc, r, 'de'), hrefEn = regionUrl(cc, r, 'en');
-  const alt = [{ hreflang: locale('de', cc), href: hrefDe }, { hreflang: 'en', href: hrefEn }, { hreflang: 'x-default', href: hrefDe }];
+  const alt = alternates(cc, l => regionUrl(cc, r, l));
+  if (lang === 'fr' || lang === 'it') return regionPageRo(cc, r, lang, alt);
   const crumbs = [
     { name: T ? 'Home' : 'Start', href: homeUrl(lang) },
     { name: `${Term} ${Y} ${country.inName[lang]}`, href: countryUrl(cc, lang) },
@@ -382,7 +432,8 @@ function countryPage(cc, lang, stats) {
   const country = countries[cc], T = lang === 'en';
   const term = country.term[lang], Term = term.replace(/^./, c => c.toUpperCase());
   const p = countryUrl(cc, lang);
-  const alt = [{ hreflang: locale('de', cc), href: countryUrl(cc, 'de') }, { hreflang: 'en', href: countryUrl(cc, 'en') }, { hreflang: 'x-default', href: countryUrl(cc, 'de') }];
+  const alt = alternates(cc, l => countryUrl(cc, l));
+  if (lang === 'fr' || lang === 'it') return countryPageRo(cc, lang, stats, alt);
   const nat = country.holidays.filter(h => !h.regions && (h.type || 'public') === 'public');
   const natCountry = Object.assign({}, country, { holidays: nat });
   const off = [Y - 1, Y, Y + 1].reduce((a, y) => a.concat(C.holidaysFor(natCountry, null, y).map(h => h.date)), []);
@@ -429,7 +480,8 @@ function countryPage(cc, lang, stats) {
 function homePage(lang, allStats) {
   const T = lang === 'en';
   const p = homeUrl(lang);
-  const alt = [{ hreflang: 'de', href: '/' }, { hreflang: 'en', href: '/en/' }, { hreflang: 'x-default', href: '/' }];
+  const alt = alternates(null, homeUrl);
+  if (lang === 'fr' || lang === 'it') return homePageRo(lang, alt);
   const keys = [];
   cfg.countries.forEach(cc => countries[cc].regions.forEach(r => keys.push(key(cc, r.code))));
   const pl = planner(lang, 'mixed', keys, key('at', cfg.defaultRegion.at));
@@ -465,7 +517,8 @@ function homePage(lang, allStats) {
 function productPage(lang) {
   const T = lang === 'en';
   const p = productUrl(lang);
-  const alt = [{ hreflang: 'de', href: productUrl('de') }, { hreflang: 'en', href: productUrl('en') }, { hreflang: 'x-default', href: productUrl('de') }];
+  const alt = alternates(null, productUrl);
+  if (lang === 'fr' || lang === 'it') return productPageRo(lang, alt);
   const buy = cfg.product.url
     ? `<a class="btn" href="${esc(cfg.product.url)}" rel="noopener">${T ? 'Buy and download' : 'Kaufen und herunterladen'}</a>`
     : `<button class="btn" type="button" disabled>${T ? 'Available soon' : 'Bald erhältlich'}</button>`;
@@ -519,6 +572,214 @@ function legalPages() {
   write('/en/privacy/', page({ lang: 'en', cc: null, title: `Privacy | ${cfg.siteName}`, desc: 'Privacy policy', path: '/en/privacy/', alt: [{ hreflang: 'de', href: '/datenschutz/' }, { hreflang: 'en', href: '/en/privacy/' }], h1: 'Privacy', body: { main: `<div class="wrap prose"><p>The planner runs entirely in your browser; nothing you enter is sent to us or stored. The full privacy policy is available in German: <a href="/datenschutz/">Datenschutzerklärung</a>.</p></div>` }, noindex: true }));
 }
 
+// ---------- French / Italian (Swiss) pages ----------
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const RO = {
+  fr: {
+    home: 'Accueil', faqH: 'Questions fréquentes',
+    countryCrumb: `Jours fériés et ponts ${Y} en Suisse`,
+    regionTitle: r => `Jours fériés ${Y} ${r.name.fr} : ponts et planificateur de congés`,
+    regionDesc: (r, N, tot) => `Tous les jours fériés et ponts ${Y} ${r.in.fr}. Le planificateur gratuit montre comment ${N} jours de vacances vous donnent ${tot} jours libres.`,
+    regionH1: r => `Jours fériés et ponts ${Y} ${r.in.fr}`,
+    regionLede: (r, wk, pub, N, tot) => `En ${Y}, ${wk} des ${pub} jours fériés ${esc(r.in.fr)} tombent en semaine. Avec <strong>${N} jours de vacances</strong>, vous obtenez <strong>${tot} jours libres</strong>. Indiquez votre propre nombre de jours ci-dessous : le plan se recalcule aussitôt.`,
+    bestH: r => `Les meilleurs ponts ${Y} ${r.in.fr}`,
+    bestP: 'Pour chaque jour férié, la façon la moins coûteuse d’en faire un long week-end, et une variante plus longue si vous avez quelques jours de plus.',
+    freeH: 'Longs week-ends sans poser de vacances', days: 'jours',
+    holH: r => `Jours fériés ${Y} ${r.in.fr}`,
+    othersH: 'Autres cantons',
+    appName: r => `Planificateur de congés ${Y} ${r.name.fr}`,
+    faqCount: (r, pub, wk, weH, list) => ({ q: `Combien y a-t-il de jours fériés ${r.in.fr} en ${Y} ?`, a: `${cap(r.in.fr)}, on compte ${pub} jours fériés en ${Y}. ${wk.length} tombent en semaine : ${esc(list(wk))}.${weH.length ? ` ${weH.length} tombent un week-end : ${esc(list(weH))}.` : ''}` }),
+    faqBest: (r, names, top, dates, range) => ({ q: `Quel est le meilleur pont ${Y} ${r.in.fr} ?`, a: `Le plus rentable se situe autour de ${esc(names)} : ${top.best.cost} ${plural(top.best.cost, 'jour de vacances', 'jours de vacances')} (${esc(dates)}) ${plural(top.best.cost, 'donne', 'donnent')} ${top.best.len} jours libres d’affilée, ${esc(range)}.` }),
+    faqMost: (r, N, res) => ({ q: `Comment avoir le plus de jours libres en ${Y} avec peu de vacances ?`, a: `Posez d’abord les ponts à côté des jours fériés qui tombent un mardi ou un jeudi, puis construisez des pauses plus longues autour de Pâques, de la Pentecôte et de Noël. ${esc(cap(r.in.fr))}, ${N} jours de vacances répartis ainsi donnent ${res.total} jours libres en ${res.breaks.length} périodes. Le planificateur de cette page fait le calcul pour n’importe quel nombre de jours.` }),
+    faqXmas: wd => ({ q: `Le 24 décembre ${Y} est-il férié ?`, a: `Non. La veille de Noël n’est pas un jour férié en Suisse, mais de nombreux employeurs accordent la journée ou la demi-journée. En ${Y}, elle tombe un ${wd}. Si vous avez congé ce jour-là, cochez-le dans le planificateur sous « Plus de réglages ».` }),
+    faqWhat: { q: 'Qu’est-ce qu’un pont ?', a: 'Un jour ouvrable isolé entre un jour férié et le week-end, par exemple le vendredi après l’Ascension. En le prenant, un seul jour de vacances vous donne quatre jours libres d’affilée.' },
+    countryTitle: `Jours fériés et ponts ${Y} en Suisse : tous les cantons`,
+    countryDesc: `Jours fériés et ponts ${Y} pour les 26 cantons suisses, avec un planificateur gratuit qui répartit vos jours de vacances pour un maximum de jours libres.`,
+    countryH1: `Jours fériés et ponts ${Y} en Suisse`,
+    countryLede: n => `En Suisse, ${n} jours fériés sont valables dans tous les cantons ; chaque canton ajoute les siens. Choisissez votre canton ci-dessous.`,
+    compareH: 'Tous les cantons comparés', thCanton: 'Canton', thHol: 'Jours fériés', thWk: 'dont en semaine', thOff: N => `Jours libres avec ${N} jours de vacances`,
+    natH: `Ponts ${Y} pour toute la Suisse`, natP: 'Calculé avec les jours fériés valables dans tous les cantons. La page de votre canton ajoute les jours fériés cantonaux.',
+    faqMostCanton: (tops, wk, min) => ({ q: `Quel canton compte le plus de jours fériés en ${Y} ?`, a: `${tops.join(', ')} ${tops.length > 1 ? 'comptent' : 'compte'} en ${Y} le plus de jours fériés en semaine (${wk}). Le moins : ${min.name} (${min.wk}).` }),
+    allH: 'Tous les cantons',
+    homeTitle: `Ponts ${Y} en Suisse : plus de jours libres avec peu de vacances`,
+    homeDesc: `Planificateur de congés gratuit pour ${Y} : choisissez votre canton et votre nombre de jours de vacances, et obtenez le plan avec le plus de jours libres. Pour les 26 cantons.`,
+    homeH1: `Plus de jours libres en ${Y}`,
+    homeLede: 'Choisissez votre canton et le nombre de jours de vacances dont vous disposez. Le planificateur trouve la combinaison de ponts et de vacances qui vous donne le plus de temps libre, à enregistrer directement dans votre calendrier.',
+    homeAll: 'Tous les cantons comparés',
+    faqHow: { q: 'Comment le planificateur calcule-t-il ?', a: 'Il examine chaque période possible de l’année, compte les jours de vacances nécessaires et choisit la combinaison qui vous donne le plus de jours libres pour votre budget. Par défaut, il ne propose que des périodes qui contiennent un jour férié ou durent au moins neuf jours, pour ne pas gaspiller de vacances sur de simples longs week-ends.' },
+    plannerName: `Planificateur de congés ${Y}`,
+    productTitle: `Planificateur de congés ${Y} à imprimer (PDF) et modèle Excel`,
+    productDesc: `Calendrier annuel ${Y} avec tous les jours fériés de votre canton, et un modèle Excel pour le solde de vacances, l’équipe et la famille.`,
+    productH1: `Planificateur de congés ${Y} à imprimer et à remplir`,
+    productIntro: 'Le planificateur gratuit de ce site vous dit quels jours prendre. Ce pack vous aide à garder une vue d’ensemble toute l’année :',
+    productList: [`Calendrier annuel ${Y} à imprimer (A4 et A3) pour chaque canton, avec les jours fériés et les ponts déjà indiqués`, 'Modèle Excel et Google Sheets qui compte les jours de vacances pris et restants', 'Vue d’équipe qui signale quand trop de personnes sont absentes en même temps', 'Vue famille qui coordonne les vacances des deux parents'],
+    productNote: 'Paiement unique, téléchargement immédiat, mise à jour pour l’année suivante incluse.',
+    buy: 'Acheter et télécharger', soon: 'Bientôt disponible',
+    imprintTitle: 'Mentions légales', imprintBody: 'Les mentions légales juridiquement contraignantes sont disponibles en allemand :',
+    privacyTitle: 'Confidentialité', privacyBody: 'Le planificateur fonctionne entièrement dans votre navigateur ; rien de ce que vous saisissez ne nous est transmis ni enregistré. La déclaration de confidentialité complète est disponible en allemand :'
+  },
+  it: {
+    home: 'Home', faqH: 'Domande frequenti',
+    countryCrumb: `Giorni festivi e ponti ${Y} in Svizzera`,
+    regionTitle: r => `Giorni festivi ${Y} ${r.name.it}: ponti e pianificatore ferie`,
+    regionDesc: (r, N, tot) => `Tutti i giorni festivi e i ponti ${Y} ${r.in.it}. Il pianificatore gratuito mostra come ${N} giorni di ferie ti danno ${tot} giorni liberi.`,
+    regionH1: r => `Giorni festivi e ponti ${Y} ${r.in.it}`,
+    regionLede: (r, wk, pub, N, tot) => `Nel ${Y}, ${wk} dei ${pub} giorni festivi ${esc(r.in.it)} cadono in un giorno feriale. Con <strong>${N} giorni di ferie</strong> ottieni <strong>${tot} giorni liberi</strong>. Inserisci qui sotto il tuo numero di giorni: il piano si ricalcola subito.`,
+    bestH: r => `I ponti migliori ${Y} ${r.in.it}`,
+    bestP: 'Per ogni festività, il modo più economico per trasformarla in un weekend lungo, e una variante più lunga se ti avanzano alcuni giorni.',
+    freeH: 'Weekend lunghi senza prendere ferie', days: 'giorni',
+    holH: r => `Giorni festivi ${Y} ${r.in.it}`,
+    othersH: 'Altri cantoni',
+    appName: r => `Pianificatore ferie ${Y} ${r.name.it}`,
+    faqCount: (r, pub, wk, weH, list) => ({ q: `Quanti giorni festivi ci sono ${r.in.it} nel ${Y}?`, a: `${cap(r.in.it)} ci sono ${pub} giorni festivi nel ${Y}. ${wk.length} cadono in un giorno feriale: ${esc(list(wk))}.${weH.length ? ` ${weH.length} cadono nel fine settimana: ${esc(list(weH))}.` : ''}` }),
+    faqBest: (r, names, top, dates, range) => ({ q: `Qual è il ponte migliore del ${Y} ${r.in.it}?`, a: `Il più conveniente è intorno a ${esc(names)}: ${top.best.cost} ${plural(top.best.cost, 'giorno di ferie', 'giorni di ferie')} (${esc(dates)}) ${plural(top.best.cost, 'dà', 'danno')} ${top.best.len} giorni liberi di fila, ${esc(range)}.` }),
+    faqMost: (r, N, res) => ({ q: `Come avere più giorni liberi nel ${Y} con poche ferie?`, a: `Prendi prima i ponti accanto alle festività che cadono di martedì o di giovedì, poi costruisci pause più lunghe intorno a Pasqua, Pentecoste e Natale. ${esc(cap(r.in.it))}, ${N} giorni di ferie distribuiti così danno ${res.total} giorni liberi in ${res.breaks.length} periodi. Il pianificatore in questa pagina fa il calcolo per qualsiasi numero di giorni.` }),
+    faqXmas: wd => ({ q: `Il 24 dicembre ${Y} è festivo?`, a: `No. La Vigilia di Natale non è un giorno festivo in Svizzera, ma molti datori di lavoro concedono la giornata o la mezza giornata libera. Nel ${Y} cade di ${wd}. Se hai libero quel giorno, selezionalo nel pianificatore sotto «Altre impostazioni».` }),
+    faqWhat: { q: 'Che cos’è un ponte?', a: 'Un singolo giorno lavorativo tra una festività e il fine settimana, per esempio il venerdì dopo l’Ascensione. Prendendolo, un solo giorno di ferie ti dà quattro giorni liberi di fila.' },
+    countryTitle: `Giorni festivi e ponti ${Y} in Svizzera: tutti i cantoni`,
+    countryDesc: `Giorni festivi e ponti ${Y} per tutti i 26 cantoni svizzeri, con un pianificatore gratuito che distribuisce le tue ferie per avere più giorni liberi.`,
+    countryH1: `Giorni festivi e ponti ${Y} in Svizzera`,
+    countryLede: n => `In Svizzera ${n} giorni festivi valgono in tutti i cantoni; ogni cantone aggiunge i propri. Scegli il tuo cantone qui sotto.`,
+    compareH: 'Tutti i cantoni a confronto', thCanton: 'Cantone', thHol: 'Giorni festivi', thWk: 'di cui feriali', thOff: N => `Giorni liberi con ${N} giorni di ferie`,
+    natH: `Ponti ${Y} per tutta la Svizzera`, natP: 'Calcolato con le festività valide in tutti i cantoni. La pagina del tuo cantone aggiunge quelle cantonali.',
+    faqMostCanton: (tops, wk, min) => ({ q: `Quale cantone ha più giorni festivi nel ${Y}?`, a: `${tops.join(', ')} ${tops.length > 1 ? 'hanno' : 'ha'} nel ${Y} il maggior numero di festività in giorni feriali (${wk}). Il minimo: ${min.name} (${min.wk}).` }),
+    allH: 'Tutti i cantoni',
+    homeTitle: `Ponti ${Y} in Svizzera: più giorni liberi con poche ferie`,
+    homeDesc: `Pianificatore ferie gratuito per il ${Y}: scegli il tuo cantone e quanti giorni di ferie hai, e ottieni il piano con più giorni liberi. Per tutti i 26 cantoni.`,
+    homeH1: `Più giorni liberi nel ${Y}`,
+    homeLede: 'Scegli il tuo cantone e quanti giorni di ferie hai. Il pianificatore trova la combinazione di ponti e vacanze che ti dà più tempo libero, da salvare direttamente nel calendario.',
+    homeAll: 'Tutti i cantoni a confronto',
+    faqHow: { q: 'Come calcola il pianificatore?', a: 'Esamina ogni periodo possibile dell’anno, conta i giorni di ferie necessari e sceglie la combinazione che ti dà più giorni liberi con le ferie che hai. Di norma propone solo periodi che contengono una festività o durano almeno nove giorni, così non sprechi ferie in semplici weekend lunghi.' },
+    plannerName: `Pianificatore ferie ${Y}`,
+    productTitle: `Pianificatore ferie ${Y} da stampare (PDF) e modello Excel`,
+    productDesc: `Calendario annuale ${Y} con tutti i giorni festivi del tuo cantone, più un modello Excel per il saldo ferie, il team e la famiglia.`,
+    productH1: `Pianificatore ferie ${Y} da stampare e compilare`,
+    productIntro: 'Il pianificatore gratuito di questo sito ti dice quali giorni prendere. Questo pacchetto ti aiuta a tenere tutto sotto controllo durante l’anno:',
+    productList: [`Calendario annuale ${Y} da stampare (A4 e A3) per ogni cantone, con festività e ponti già segnati`, 'Modello Excel e Google Sheets che conta i giorni di ferie presi e residui', 'Vista team che segnala quando troppe persone sono assenti contemporaneamente', 'Vista famiglia che coordina le ferie dei due genitori'],
+    productNote: 'Pagamento unico, download immediato, aggiornamento per l’anno successivo incluso.',
+    buy: 'Acquista e scarica', soon: 'Presto disponibile',
+    imprintTitle: 'Note legali', imprintBody: 'Le note legali giuridicamente vincolanti sono disponibili in tedesco:',
+    privacyTitle: 'Privacy', privacyBody: 'Il pianificatore funziona interamente nel tuo browser; nulla di ciò che inserisci ci viene trasmesso o salvato. L’informativa completa sulla privacy è disponibile in tedesco:'
+  }
+};
+
+function regionPageRo(cc, r, lang, alt) {
+  const X = RO[lang], country = countries[cc];
+  const rd = regionData(cc, r);
+  const days = daysFor(rd);
+  const pub = rd.holidays.filter(h => h.type === 'public' && h.date.startsWith(String(Y)));
+  const isWd = h => { const w = C.dow(C.parseISO(h.date)); return w > 0 && w < 6; };
+  const wk = pub.filter(isWd), weH = pub.filter(h => !isWd(h));
+  const bridges = C.bridgeDays(days, Y);
+  const freeLW = C.freeLongWeekends(days, Y);
+  const pl = planner(lang, cc, [key(cc, r.code)], key(cc, r.code));
+  const res = pl.plan.result, N = cfg.plannerDefaultLeave;
+  const top = bridges.slice().sort((a, b) => (b.best.len / b.best.cost - a.best.len / a.best.cost) || (b.best.len - a.best.len))[0];
+  const p = regionUrl(cc, r, lang);
+  const crumbs = [{ name: X.home, href: homeUrl(lang) }, { name: X.countryCrumb, href: countryUrl(cc, lang) }, { name: r.name[lang], self: p }];
+  const list = arr => arr.map(h => `${h.name[lang]} (${C.weekday(h.date, lang)} ${C.fmtDate(h.date, lang, cc)})`).join(', ');
+  const faq = [X.faqCount(r, pub.length, wk, weH, list)];
+  if (top) faq.push(X.faqBest(r, top.holidays.map(d => rd.holidays.find(h => h.date === d && h.on).name[lang]).join(lang === 'fr' ? ' et ' : ' e '), top,
+    top.best.leave.map(d => C.fmtDate(d, lang, cc, false, true)).join(', '), fromTo(top.best.from, top.best.to, lang, cc)));
+  faq.push(X.faqMost(r, N, res));
+  const xmasEve = rd.holidays.find(h => h.id === 'xmaseve' && h.date.startsWith(String(Y)));
+  if (xmasEve) faq.push(X.faqXmas(C.weekday(xmasEve.date, lang)));
+  faq.push(X.faqWhat);
+  const main = `
+    ${pl.html}
+    ${adSlot('region-top')}
+    <section class="section"><div class="wrap">
+      <h2>${esc(X.bestH(r))}</h2>
+      <p>${X.bestP}</p>
+      ${bridgeList(bridges, rd, lang, cc)}
+    </div></section>
+    ${freeLW.length ? `<section class="section"><div class="wrap">
+      <h2>${X.freeH}</h2>
+      <ul>${freeLW.map(w => `<li>${esc(C.fmtRange(w.from, w.to, lang, cc, true))}${lang === 'fr' ? ' : ' : ': '}${w.len} ${X.days}</li>`).join('')}</ul>
+    </div></section>` : ''}
+    <section class="section"><div class="wrap">
+      <h2>${esc(X.holH(r))}</h2>
+      ${holidayTable(rd, lang, cc)}
+    </div></section>
+    ${adSlot('region-mid')}
+    ${ctaBlock(lang, cc, r.name[lang], true)}
+    <section class="section"><div class="wrap"><h2>${X.faqH}</h2>${faqBlock(faq)}</div></section>
+    <section class="section section--links"><div class="wrap"><h2>${X.othersH}</h2>${regionLinks(cc, lang, r.code)}</div></section>`;
+  write(p, page({
+    lang, cc, title: X.regionTitle(r), desc: X.regionDesc(r, N, res.total), path: p, alt, h1: X.regionH1(r),
+    crumbs: crumbs.slice(0, 2).concat([{ name: r.name[lang] }]),
+    body: { lede: X.regionLede(r, wk.length, pub.length, N, res.total), main },
+    jsonld: [breadcrumbLd(crumbs), faqLd(faq), appLd(lang, X.appName(r), p)],
+    data: pl.data
+  }));
+  return { r, total: res.total, wk: wk.length, pub: pub.length };
+}
+
+function countryPageRo(cc, lang, stats, alt) {
+  const X = RO[lang], country = countries[cc];
+  const p = countryUrl(cc, lang);
+  const nat = country.holidays.filter(h => !h.regions && (h.type || 'public') === 'public');
+  const natCountry = Object.assign({}, country, { holidays: nat });
+  const off = [Y - 1, Y, Y + 1].reduce((a, y) => a.concat(C.holidaysFor(natCountry, null, y).map(h => h.date)), []);
+  const bridges = C.bridgeDays(C.buildDays(Y, off), Y);
+  const rdNat = { holidays: [Y - 1, Y, Y + 1].reduce((a, y) => a.concat(C.holidaysFor(natCountry, null, y)), []), school: [] };
+  const pl = planner(lang, cc, country.regions.map(r => key(cc, r.code)), key(cc, cfg.defaultRegionByLang[lang]));
+  const rows = stats.map(s => `<tr><td><a href="${regionUrl(cc, s.r, lang)}">${esc(s.r.name[lang])}</a></td><td>${s.pub}</td><td>${s.wk}</td><td>${s.total}</td></tr>`).join('');
+  const m = stats.slice().sort((a, b) => b.wk - a.wk);
+  const tops = m.filter(s => s.wk === m[0].wk).map(s => esc(s.r.name[lang]));
+  const faq = [X.faqMostCanton(tops, m[0].wk, { name: esc(m[m.length - 1].r.name[lang]), wk: m[m.length - 1].wk })];
+  const crumbs = [{ name: X.home, href: homeUrl(lang) }, { name: country.name[lang], self: p }];
+  const main = `
+    ${pl.html}
+    ${adSlot('country-top')}
+    <section class="section"><div class="wrap">
+      <h2>${X.compareH}</h2>
+      <div class="table-scroll"><table><thead><tr><th>${X.thCanton}</th><th>${X.thHol}</th><th>${X.thWk}</th><th>${X.thOff(cfg.plannerDefaultLeave)}</th></tr></thead><tbody>${rows}</tbody></table></div>
+    </div></section>
+    <section class="section"><div class="wrap">
+      <h2>${X.natH}</h2><p>${X.natP}</p>
+      ${bridgeList(bridges, rdNat, lang, cc)}
+    </div></section>
+    ${ctaBlock(lang, cc, null, true)}
+    <section class="section"><div class="wrap"><h2>${X.faqH}</h2>${faqBlock(faq)}</div></section>
+    <section class="section section--links"><div class="wrap"><h2>${X.allH}</h2>${regionLinks(cc, lang, null)}</div></section>`;
+  write(p, page({ lang, cc, title: X.countryTitle, desc: X.countryDesc, path: p, alt, h1: X.countryH1, crumbs: [crumbs[0], { name: country.name[lang] }],
+    body: { lede: X.countryLede(nat.length), main }, jsonld: [breadcrumbLd(crumbs), faqLd(faq), appLd(lang, X.plannerName, p)], data: pl.data }));
+}
+
+function homePageRo(lang, alt) {
+  const X = RO[lang], cc = 'ch', p = homeUrl(lang);
+  const pl = planner(lang, cc, countries[cc].regions.map(r => key(cc, r.code)), key(cc, cfg.defaultRegionByLang[lang]));
+  const faq = [X.faqWhat, X.faqHow];
+  const main = `
+    ${pl.html}
+    ${adSlot('home-top')}
+    <section class="section"><div class="wrap"><h2>${esc(countries[cc].name[lang])}</h2>${regionLinks(cc, lang, null)}<p><a href="${countryUrl(cc, lang)}">${X.homeAll}</a></p></div></section>
+    ${ctaBlock(lang, null, null, true)}
+    <section class="section"><div class="wrap"><h2>${X.faqH}</h2>${faqBlock(faq)}</div></section>`;
+  const site = { '@context': 'https://schema.org', '@type': 'WebSite', name: cfg.siteName, url: url(p), inLanguage: lang };
+  write(p, page({ lang, cc, title: X.homeTitle, desc: X.homeDesc, path: p, alt, h1: X.homeH1, body: { lede: X.homeLede, main }, jsonld: [site, faqLd(faq), appLd(lang, X.plannerName, p)], data: pl.data }));
+}
+
+function productPageRo(lang, alt) {
+  const X = RO[lang], p = productUrl(lang);
+  const buy = cfg.product.url ? `<a class="btn" href="${esc(cfg.product.url)}" rel="noopener">${X.buy}</a>` : `<button class="btn" type="button" disabled>${X.soon}</button>`;
+  const main = `<div class="wrap product">
+    <div class="prose"><p>${X.productIntro}</p><ul class="ticks">${X.productList.map(li => `<li>${esc(li)}</li>`).join('')}</ul></div>
+    <aside class="buybox"><p class="price">${esc(cfg.product.price[lang])}</p><p>${X.productNote}</p>${buy}</aside>
+  </div>`;
+  write(p, page({ lang, cc: 'ch', title: X.productTitle, desc: X.productDesc, path: p, alt, h1: X.productH1, body: { lede: '', main }, jsonld: [] }));
+}
+
+function legalPagesRo() {
+  ['fr', 'it'].forEach(lang => {
+    const X = RO[lang];
+    const imp = legalUrl('imprint', lang), prv = legalUrl('privacy', lang);
+    write(imp, page({ lang, cc: 'ch', title: `${X.imprintTitle} | ${cfg.siteName}`, desc: X.imprintTitle, path: imp, alt: [{ hreflang: 'de', href: '/impressum/' }, { hreflang: lang, href: imp }], h1: X.imprintTitle, body: { main: `<div class="wrap prose"><p>${X.imprintBody} <a href="/impressum/" lang="de">Impressum</a>.</p></div>` }, noindex: true }));
+    if (prv !== imp) write(prv, page({ lang, cc: 'ch', title: `${X.privacyTitle} | ${cfg.siteName}`, desc: X.privacyTitle, path: prv, alt: [{ hreflang: 'de', href: '/datenschutz/' }, { hreflang: lang, href: prv }], h1: X.privacyTitle, body: { main: `<div class="wrap prose"><p>${X.privacyBody} <a href="/datenschutz/" lang="de">Datenschutzerklärung</a>.</p></div>` }, noindex: true }));
+  });
+}
+
 // ---------- run ----------
 fs.rmSync(DIST, { recursive: true, force: true });
 fs.mkdirSync(path.join(DIST, 'assets'), { recursive: true });
@@ -526,8 +787,8 @@ fs.mkdirSync(path.join(DIST, 'assets'), { recursive: true });
 ['style.css', 'app.js'].forEach(f => fs.copyFileSync(path.join(ROOT, 'assets', f), path.join(DIST, 'assets', f)));
 
 const allStats = {};
-['de', 'en'].forEach(lang => {
-  cfg.countries.forEach(cc => {
+LANGS.forEach(lang => {
+  cfg.countries.filter(cc => langsOf(cc).includes(lang)).forEach(cc => {
     const stats = countries[cc].regions.map(r => regionPage(cc, r, lang));
     allStats[cc] = stats;
     countryPage(cc, lang, stats);
@@ -536,6 +797,7 @@ const allStats = {};
   productPage(lang);
 });
 legalPages();
+legalPagesRo();
 
 // favicon
 fs.writeFileSync(path.join(DIST, 'favicon.svg'), `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#16243a"/><rect x="6" y="6" width="5" height="5" rx="1.5" fill="#dde5f0"/><rect x="13.5" y="6" width="5" height="5" rx="1.5" fill="#ffb81c"/><rect x="21" y="6" width="5" height="5" rx="1.5" fill="#dde5f0"/><rect x="6" y="13.5" width="5" height="5" rx="1.5" fill="#2852a3"/><rect x="13.5" y="13.5" width="5" height="5" rx="1.5" fill="#ffb81c"/><rect x="21" y="13.5" width="5" height="5" rx="1.5" fill="#ffb81c"/><rect x="6" y="21" width="5" height="5" rx="1.5" fill="#dde5f0"/><rect x="13.5" y="21" width="5" height="5" rx="1.5" fill="#dde5f0"/><rect x="21" y="21" width="5" height="5" rx="1.5" fill="#dde5f0"/></svg>`);
@@ -548,7 +810,7 @@ ${sitemap.map(s => `  <url><loc>${url(s.loc)}</loc><lastmod>${today}</lastmod>${
 `);
 fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${url('/sitemap.xml')}\n`);
 // llms.txt — plain index for AI search engines
-fs.writeFileSync(path.join(DIST, 'llms.txt'), `# ${cfg.siteName}\n\n> Public holidays, bridge days (Brückentage / Fenstertage) and school holidays ${Y} for every state in ${cfg.countries.map(cc => countries[cc].name.en).join(' and ')}, with a free planner that spreads days of leave for the most time off. School holidays from official sources (BMBWF, KMK); holidays computed from statutory rules.\n\n## Deutsch\n${llms.filter(l => l.lang === 'de').map(l => `- [${l.title}](${url(l.href)}): ${l.desc}`).join('\n')}\n\n## English\n${llms.filter(l => l.lang === 'en').map(l => `- [${l.title}](${url(l.href)}): ${l.desc}`).join('\n')}\n`);
+fs.writeFileSync(path.join(DIST, 'llms.txt'), `# ${cfg.siteName}\n\n> Public holidays, bridge days (Brückentage / Fenstertage) and school holidays ${Y} for every state and canton in ${cfg.countries.map(cc => countries[cc].name.en).join(', ')}, with a free planner that spreads days of leave for the most time off. School holidays from official sources (BMBWF, KMK); holidays computed from statutory rules.\n\n## Deutsch\n${llms.filter(l => l.lang === 'de').map(l => `- [${l.title}](${url(l.href)}): ${l.desc}`).join('\n')}\n\n## English\n${llms.filter(l => l.lang === 'en').map(l => `- [${l.title}](${url(l.href)}): ${l.desc}`).join('\n')}\n\n## Français (Suisse)\n${llms.filter(l => l.lang === 'fr').map(l => `- [${l.title}](${url(l.href)}): ${l.desc}`).join('\n')}\n\n## Italiano (Svizzera)\n${llms.filter(l => l.lang === 'it').map(l => `- [${l.title}](${url(l.href)}): ${l.desc}`).join('\n')}\n`);
 if (cfg.adsenseClient) fs.writeFileSync(path.join(DIST, 'ads.txt'), `google.com, ${cfg.adsenseClient.replace('ca-', '')}, DIRECT, f08c47fec0942fa0\n`);
 fs.writeFileSync(path.join(DIST, '404.html'), page({ lang: 'de', cc: null, title: `Seite nicht gefunden | ${cfg.siteName}`, desc: '', path: '/404.html', h1: 'Diese Seite gibt es nicht', body: { lede: `Zur <a href="/">Startseite</a> mit dem Urlaubsplaner. <span lang="en">Go to the <a href="/en/">English home page</a>.</span>`, main: '' }, noindex: true }));
 fs.writeFileSync(path.join(DIST, '_headers'), `/assets/*\n  Cache-Control: public, max-age=86400\n/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n`);

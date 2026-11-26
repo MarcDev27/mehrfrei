@@ -70,6 +70,34 @@
       calendarLabel: 'Calendar {year} with your plan'
     }
   };
+  S.fr = {
+    leaveDays: 'jours de vacances', leaveDay1: 'jour de vacances', daysOff: 'jours libres', dayOff1: 'jour libre',
+    region: 'Canton', fewer: 'Un jour de vacances de moins', more: 'Un jour de vacances de plus',
+    style: 'Comment voulez-vous vos congés ?',
+    modes: { smart: 'Ponts et vraies vacances', weekends: 'Le plus de longs week-ends possible', long: 'Seulement des pauses de 9 jours ou plus' },
+    modesDE: {}, options: 'Plus de réglages',
+    family: 'Prendre des vacances uniquement pendant les vacances scolaires', familyHint: '',
+    optionalHead: 'Ces jours-là, je suis aussi en congé', equals: 'donnent', planTitle: 'Votre plan pour {year}',
+    unused: '{n} jours de vacances restent inutilisés, car aucune autre période ne correspond à vos réglages.',
+    noPlan: 'Aucune période ne correspond à ces réglages. Choisissez un autre style.',
+    takeOff: 'Vacances', off: 'libre', saveIcs: 'Enregistrer dans le calendrier', copyLink: 'Copier le lien', copied: 'Lien copié', icsTitle: 'Congé',
+    legend: { hol: 'Jour férié', leave: 'Jour de vacances', brk: 'Congé d’affilée', school: 'Vacances scolaires', we: 'Week-end' },
+    weekdaysShort: ['lu', 'ma', 'me', 'je', 've', 'sa', 'di'], calendarLabel: 'Calendrier {year} avec votre plan'
+  };
+  S.it = {
+    leaveDays: 'giorni di ferie', leaveDay1: 'giorno di ferie', daysOff: 'giorni liberi', dayOff1: 'giorno libero',
+    region: 'Cantone', fewer: 'Un giorno di ferie in meno', more: 'Un giorno di ferie in più',
+    style: 'Come vuoi i tuoi giorni liberi?',
+    modes: { smart: 'Ponti e vere vacanze', weekends: 'Più weekend lunghi possibile', long: 'Solo pause di almeno 9 giorni' },
+    modesDE: {}, options: 'Altre impostazioni',
+    family: 'Prendere ferie solo durante le vacanze scolastiche', familyHint: '',
+    optionalHead: 'Ho libero anche in questi giorni', equals: 'danno', planTitle: 'Il tuo piano per il {year}',
+    unused: '{n} giorni di ferie restano inutilizzati perché nessun altro periodo corrisponde alle tue impostazioni.',
+    noPlan: 'Nessun periodo corrisponde a queste impostazioni. Scegli un altro stile.',
+    takeOff: 'Ferie', off: 'libero', saveIcs: 'Salva nel calendario', copyLink: 'Copia link', copied: 'Link copiato', icsTitle: 'Libero',
+    legend: { hol: 'Giorno festivo', leave: 'Giorno di ferie', brk: 'Libero di fila', school: 'Vacanze scolastiche', we: 'Fine settimana' },
+    weekdaysShort: ['lu', 'ma', 'me', 'gi', 've', 'sa', 'do'], calendarLabel: 'Calendario {year} con il tuo piano'
+  };
   // Swiss German: "Ferien" instead of "Urlaub", "Kanton" instead of "Bundesland"
   var OVERRIDES = {
     'de-ch': {
