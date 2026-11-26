@@ -14,7 +14,7 @@
     "ch": "ZH"
   },
   "adsenseClient": "",
-  "showAdPlaceholders": true,
+  "showAdPlaceholders": false,
   "product": {
     "url": "",
     "price": {
