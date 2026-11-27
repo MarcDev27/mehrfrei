@@ -77,8 +77,10 @@ function write(rel, html) {
 
 // ---------- layout ----------
 function adSlot(name) {
+  // With an AdSense ID set, Auto ads place ads by themselves. Manual units appear only for slot IDs listed in config.adSlots.
   if (cfg.adsenseClient) {
-    return `<div class="ad-slot wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="${cfg.adsenseClient}" data-ad-slot="${name}" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>`;
+    const id = cfg.adSlots && cfg.adSlots[name];
+    return id ? `<div class="ad-slot wrap"><ins class="adsbygoogle" style="display:block" data-ad-client="${cfg.adsenseClient}" data-ad-slot="${id}" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>` : '';
   }
   return cfg.showAdPlaceholders ? `<div class="wrap"><div class="ad-slot ad-slot--ph" aria-hidden="true">Anzeigenfläche (${name})</div></div>` : '';
 }
@@ -125,6 +127,7 @@ function page({ lang, cc, title, desc, path: p, alt, h1, crumbs, body, jsonld, d
   <meta name="theme-color" content="#eef2f7">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
+  ${cfg.adsenseClient ? `<meta name="google-adsense-account" content="${cfg.adsenseClient}">` : ''}
   ${cfg.adsenseClient ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${cfg.adsenseClient}" crossorigin="anonymous"></script>` : ''}
   ${ld}
 </head>
@@ -520,7 +523,7 @@ function productPage(lang) {
   const alt = alternates(null, productUrl);
   if (lang === 'fr' || lang === 'it') return productPageRo(lang, alt);
   const buy = cfg.product.url
-    ? `<a class="btn" href="${esc(cfg.product.url)}" rel="noopener">${T ? 'Buy and download' : 'Kaufen und herunterladen'}</a>`
+    ? `<a class="btn" href="${esc(cfg.product.url)}" rel="noopener">${T ? 'Buy and download' : 'Kaufen und herunterladen'}</a><p class="source">${T ? 'Secure checkout via Gumroad. VAT included.' : 'Sichere Bezahlung über Gumroad. Inkl. MwSt.'}</p>`
     : `<button class="btn" type="button" disabled>${T ? 'Available soon' : 'Bald erhältlich'}</button>`;
   const title = T ? `Leave planner ${Y}: printable PDF and Excel template` : `Urlaubsplaner ${Y} zum Ausdrucken (PDF) und als Excel-Vorlage`;
   const desc = T ? `Year planner ${Y} with all holidays and school breaks for your state, plus an Excel sheet for leave balance, team and family planning.` : `Jahresplaner ${Y} mit allen Feiertagen und Schulferien deines Bundeslands, dazu eine Excel-Vorlage für Resturlaub, Team- und Familienplanung.`;
@@ -529,17 +532,20 @@ function productPage(lang) {
       <p>${T ? 'The free planner on this site tells you which days to take. This pack is for keeping track over the year:' : 'Der kostenlose Planer auf dieser Seite sagt dir, welche Tage du nehmen solltest. Dieses Paket hilft dir, das ganze Jahr den Überblick zu behalten:'}</p>
       <ul class="ticks">
         ${(T ? [
-          `A printable ${Y} year planner (A4 and A3) for each state, with holidays, bridge days and school holidays already marked`,
-          'An Excel and Google Sheets template that counts days of leave taken and left',
-          'A team view that flags when too many people are off at the same time',
-          'A family view that lines up both parents’ leave with the school holidays'
+          `Printable ${Y} year planners (PDF, A4 landscape) for all 9 Austrian and 16 German states and all 26 Swiss cantons, with public holidays, school holidays and bridge-day tips already marked`,
+          'An Excel template that also works in Google Sheets: leave balance with allowance, days taken and days left',
+          'A team view for up to 20 people that flags when too many are off at the same time',
+          'A family view that lines up both parents’ leave with the school holidays',
+          'In English, German, French and Italian'
         ] : [
-          `Jahresplaner ${Y} zum Ausdrucken (A4 und A3) für jedes Bundesland, mit Feiertagen, ${'Fenster-/Brückentagen'} und Schulferien`,
-          'Excel- und Google-Sheets-Vorlage, die genommene und übrige Urlaubstage zählt',
-          'Teamansicht, die zeigt, wann zu viele Leute gleichzeitig frei haben',
-          'Familienansicht, die den Urlaub beider Elternteile mit den Schulferien abgleicht'
+          `Jahresplaner ${Y} zum Ausdrucken (PDF, A4 quer) für alle 9 österreichischen und 16 deutschen Bundesländer sowie alle 26 Schweizer Kantone, mit Feiertagen, Schulferien und Brückentag-Tipps`,
+          'Excel-Vorlage, die auch in Google Tabellen funktioniert: Urlaubskonto mit Anspruch, genommenen und übrigen Tagen',
+          'Teamansicht für bis zu 20 Personen, die zeigt, wann zu viele gleichzeitig frei haben',
+          'Familienansicht, die den Urlaub beider Elternteile mit den Schulferien abgleicht',
+          'Auf Deutsch, Englisch, Französisch und Italienisch'
         ]).map(li => `<li>${esc(li)}</li>`).join('')}
       </ul>
+      <figure class="preview"><img src="/assets/product/planner-${lang}.jpg" width="1286" height="910" loading="lazy" alt="${T ? `Page 1 of the printable leave planner ${Y}` : `Seite 1 des Urlaubsplaners ${Y} zum Ausdrucken`}"></figure>
     </div>
     <aside class="buybox">
       <p class="price">${esc(cfg.product.price[lang])}</p>
@@ -565,6 +571,7 @@ function legalPages() {
     <h2>Hosting und Server-Logfiles</h2><p>Beim Aufruf der Website verarbeitet der Hosting-Anbieter technisch notwendige Daten (IP-Adresse, Zeitpunkt, aufgerufene Seite, Browser) zur sicheren Auslieferung der Seite (Art. 6 Abs. 1 lit. f DSGVO).</p>
     <h2>Urlaubsplaner</h2><p>Der Planer rechnet ausschließlich in deinem Browser. Deine Eingaben werden nicht an uns übertragen und nicht gespeichert. Es werden dafür keine Cookies gesetzt.</p>
     <h2>Werbung (Google AdSense)</h2><p>Sofern aktiviert: Diese Website nutzt Google AdSense der Google Ireland Limited. Cookies und ähnliche Technologien für personalisierte Werbung werden nur nach deiner Einwilligung über das Einwilligungsbanner gesetzt (Art. 6 Abs. 1 lit. a DSGVO). Du kannst die Einwilligung jederzeit widerrufen.</p>
+    <h2>Kauf des Urlaubsplaners (Gumroad)</h2><p>Der kostenpflichtige Urlaubsplaner wird über Gumroad, Inc. (USA) verkauft, die als Verkäufer (Merchant of Record) auftritt und Zahlung, Steuern und Download abwickelt. Mit dem Klick auf „Kaufen“ verlässt du diese Website; es gilt die Datenschutzerklärung von Gumroad. Wir erhalten von Gumroad die für die Bestellung nötigen Daten (z. B. E-Mail-Adresse, Bestellung), um Support und Updates zu ermöglichen (Art. 6 Abs. 1 lit. b DSGVO).</p>
     <h2>Deine Rechte</h2><p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch. Beschwerden kannst du bei der Datenschutzbehörde (dsb.gv.at) einbringen.</p></div>`;
   write('/impressum/', page({ lang: 'de', cc: 'at', title: `Impressum | ${cfg.siteName}`, desc: 'Impressum', path: '/impressum/', alt: [{ hreflang: 'de', href: '/impressum/' }, { hreflang: 'en', href: '/en/imprint/' }], h1: 'Impressum', body: { main: imp }, noindex: true }));
   write('/datenschutz/', page({ lang: 'de', cc: 'at', title: `Datenschutz | ${cfg.siteName}`, desc: 'Datenschutzerklärung', path: '/datenschutz/', alt: [{ hreflang: 'de', href: '/datenschutz/' }, { hreflang: 'en', href: '/en/privacy/' }], h1: 'Datenschutzerklärung', body: { main: dsg }, noindex: true }));
@@ -612,7 +619,7 @@ const RO = {
     productDesc: `Calendrier annuel ${Y} avec tous les jours fériés de votre canton, et un modèle Excel pour le solde de vacances, l’équipe et la famille.`,
     productH1: `Planificateur de congés ${Y} à imprimer et à remplir`,
     productIntro: 'Le planificateur gratuit de ce site vous dit quels jours prendre. Ce pack vous aide à garder une vue d’ensemble toute l’année :',
-    productList: [`Calendrier annuel ${Y} à imprimer (A4 et A3) pour chaque canton, avec les jours fériés et les ponts déjà indiqués`, 'Modèle Excel et Google Sheets qui compte les jours de vacances pris et restants', 'Vue d’équipe qui signale quand trop de personnes sont absentes en même temps', 'Vue famille qui coordonne les vacances des deux parents'],
+    productList: [`Calendriers annuels ${Y} à imprimer (PDF, A4 paysage) pour les 26 cantons suisses, avec jours fériés et ponts conseillés, ainsi que pour l’Autriche et l’Allemagne`, 'Modèle Excel, compatible Google Sheets : solde de vacances avec droit, jours pris et jours restants', 'Vue d’équipe pour 20 personnes qui signale quand trop de personnes sont absentes en même temps', 'Vue famille qui coordonne les vacances des deux parents', 'En français, allemand, italien et anglais'],
     productNote: 'Paiement unique, téléchargement immédiat, mise à jour pour l’année suivante incluse.',
     buy: 'Acheter et télécharger', soon: 'Bientôt disponible',
     imprintTitle: 'Mentions légales', imprintBody: 'Les mentions légales juridiquement contraignantes sont disponibles en allemand :',
@@ -655,7 +662,7 @@ const RO = {
     productDesc: `Calendario annuale ${Y} con tutti i giorni festivi del tuo cantone, più un modello Excel per il saldo ferie, il team e la famiglia.`,
     productH1: `Pianificatore ferie ${Y} da stampare e compilare`,
     productIntro: 'Il pianificatore gratuito di questo sito ti dice quali giorni prendere. Questo pacchetto ti aiuta a tenere tutto sotto controllo durante l’anno:',
-    productList: [`Calendario annuale ${Y} da stampare (A4 e A3) per ogni cantone, con festività e ponti già segnati`, 'Modello Excel e Google Sheets che conta i giorni di ferie presi e residui', 'Vista team che segnala quando troppe persone sono assenti contemporaneamente', 'Vista famiglia che coordina le ferie dei due genitori'],
+    productList: [`Calendari annuali ${Y} da stampare (PDF, A4 orizzontale) per i 26 cantoni svizzeri, con festività e ponti consigliati, oltre che per Austria e Germania`, 'Modello Excel, compatibile con Google Sheets: saldo ferie con giorni spettanti, presi e residui', 'Vista team per 20 persone che segnala quando troppe persone sono assenti contemporaneamente', 'Vista famiglia che coordina le ferie dei due genitori', 'In italiano, tedesco, francese e inglese'],
     productNote: 'Pagamento unico, download immediato, aggiornamento per l’anno successivo incluso.',
     buy: 'Acquista e scarica', soon: 'Presto disponibile',
     imprintTitle: 'Note legali', imprintBody: 'Le note legali giuridicamente vincolanti sono disponibili in tedesco:',
@@ -763,9 +770,10 @@ function homePageRo(lang, alt) {
 
 function productPageRo(lang, alt) {
   const X = RO[lang], p = productUrl(lang);
-  const buy = cfg.product.url ? `<a class="btn" href="${esc(cfg.product.url)}" rel="noopener">${X.buy}</a>` : `<button class="btn" type="button" disabled>${X.soon}</button>`;
+  const buy = cfg.product.url ? `<a class="btn" href="${esc(cfg.product.url)}" rel="noopener">${X.buy}</a><p class="source">${lang === 'fr' ? 'Paiement sécurisé via Gumroad. TVA incluse.' : 'Pagamento sicuro tramite Gumroad. IVA inclusa.'}</p>` : `<button class="btn" type="button" disabled>${X.soon}</button>`;
   const main = `<div class="wrap product">
-    <div class="prose"><p>${X.productIntro}</p><ul class="ticks">${X.productList.map(li => `<li>${esc(li)}</li>`).join('')}</ul></div>
+    <div class="prose"><p>${X.productIntro}</p><ul class="ticks">${X.productList.map(li => `<li>${esc(li)}</li>`).join('')}</ul>
+      <figure class="preview"><img src="/assets/product/planner-${lang}.jpg" width="1286" height="910" loading="lazy" alt="${esc(X.productH1)}"></figure></div>
     <aside class="buybox"><p class="price">${esc(cfg.product.price[lang])}</p><p>${X.productNote}</p>${buy}</aside>
   </div>`;
   write(p, page({ lang, cc: 'ch', title: X.productTitle, desc: X.productDesc, path: p, alt, h1: X.productH1, body: { lede: '', main }, jsonld: [] }));
@@ -785,6 +793,8 @@ fs.rmSync(DIST, { recursive: true, force: true });
 fs.mkdirSync(path.join(DIST, 'assets'), { recursive: true });
 ['core.js', 'strings.js', 'render.js'].forEach(f => fs.copyFileSync(path.join(ROOT, 'engine', f), path.join(DIST, 'assets', f)));
 ['style.css', 'app.js'].forEach(f => fs.copyFileSync(path.join(ROOT, 'assets', f), path.join(DIST, 'assets', f)));
+fs.mkdirSync(path.join(DIST, 'assets', 'product'), { recursive: true });
+fs.readdirSync(path.join(ROOT, 'assets', 'product')).forEach(f => fs.copyFileSync(path.join(ROOT, 'assets', 'product', f), path.join(DIST, 'assets', 'product', f)));
 
 const allStats = {};
 LANGS.forEach(lang => {

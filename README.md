@@ -41,3 +41,20 @@ New Netlify accounts get 300 credits a month on the free plan. A production depl
 ## Languages
 
 `config.json` → `languages` sets which languages each country is published in. German and English text lives in `build.js`, in the region, country and home page functions. French and Italian page text lives in the `RO` object in `build.js`. Planner text for all languages is in `engine/strings.js`, and date formats are in `engine/core.js`. Holiday names and notes come from the data files, with one entry per language.
+
+## Paid product (leave-planner bundle)
+
+The bundle is built locally and uploaded to Gumroad. It is not part of the website: `product/out/` is in `.gitignore`.
+
+```
+node product/export-data.js     # data for all regions
+python3 product/make_pdfs.py    # 154 PDFs (A4 landscape), product/out/pdf/
+python3 product/make_xlsx.py    # 4 Excel workbooks (de/en/fr/it), product/out/excel/
+python3 product/package.py      # product/out/Mehrfrei-Urlaubsplaner-<year>.zip + preview images
+```
+
+The preview images on the product page come from `assets/product/`. Copy them over from `product/out/previews/` after a new build.
+
+## Ads
+
+Once AdSense has approved the site, enter `ca-pub-…` as `adsenseClient` in `config.json`. The build then adds the AdSense script, the verification meta tag and `ads.txt`. Ads are placed by Auto ads, which you turn on in AdSense. Manual ad units are only used if you enter their slot IDs under `adSlots` (`region-top`, `region-mid`, `country-top`, `home-top`).

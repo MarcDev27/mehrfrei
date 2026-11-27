@@ -181,6 +181,8 @@ footer a { color: var(--ink-2); }
 .price { font-size: 2.6rem; font-weight: 900; letter-spacing: -0.03em; margin: 0 0 .25rem; }
 .ticks { padding-left: 1.2rem; }
 .ticks li { margin-bottom: .4rem; }
+.preview { margin: 1.5rem 0 0; }
+.preview img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius-m); box-shadow: 0 1px 0 var(--line); background: #fff; }
 
 @media (prefers-reduced-motion: no-preference) {
   .eq-n--off { transition: background-color .2s; }

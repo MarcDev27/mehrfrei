@@ -49,5 +49,6 @@
   "defaultRegionByLang": {
     "fr": "GE",
     "it": "TI"
-  }
+  },
+  "adSlots": {}
 }
